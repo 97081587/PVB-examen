@@ -6,7 +6,8 @@ function handleSubmit(event) {
     const formData = new FormData(event.currentTarget);
 
     router.post('/klantregistratie', {
-        name: formData.get('name'),
+        first_name: formData.get('first_name'),
+        last_name: formData.get('last_name'),
         email: formData.get('email'),
         password: formData.get('password'),
         // password_confirmation: formData.get('password_confirmation'),
@@ -20,13 +21,26 @@ export default function VariableTest() {
                 <h1 className="text-3xl font-bold">Registration</h1>
 
                 <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-slate-700">
-                        Name
+                    <label htmlFor="first_name" className="block text-sm font-medium text-slate-700">
+                        First Name
                     </label>
                     <input
                         type="text"
-                        id="name"
-                        name="name"
+                        id="first_name"
+                        name="first_name"
+                        required
+                        className="mt-1 w-full rounded border border-slate-300 px-3 py-2"
+                    />
+                </div>
+
+                <div>
+                    <label htmlFor="last_name" className="block text-sm font-medium text-slate-700">
+                        Last Name
+                    </label>
+                    <input
+                        type="text"
+                        id="last_name"
+                        name="last_name"
                         required
                         className="mt-1 w-full rounded border border-slate-300 px-3 py-2"
                     />
