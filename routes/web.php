@@ -2,12 +2,10 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Home;
-
-// Route::get('/', function () {
-//     return Inertia::render('Home', [
-//         // 'canLogin' => Route::has('login'),
-//         // 'canRegister' => Route::has('register'),
-//     ]);
-// });
+use App\Http\Controllers\klantRegistratieController;
 
 Route::get('/', [Home::class, 'index']);
+
+Route::get('/klantregistratie', [klantRegistratieController::class, 'index']);
+
+Route::post('/klantregistratie', [klantRegistratieController::class, 'store']);
