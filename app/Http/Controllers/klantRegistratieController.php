@@ -23,7 +23,7 @@ class klantRegistratieController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        
+
 
         // Aanmaken van de gebruiker
         $user = User::create([
@@ -31,8 +31,6 @@ class klantRegistratieController extends Controller
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
         ]);
-
-        return response()->json(['message' => 'Registratie succesvol!'], 201);
 
         // Redirect naar een gewenste pagina na registratie
         return redirect()->route('home')->with('success', 'Registratie succesvol!');

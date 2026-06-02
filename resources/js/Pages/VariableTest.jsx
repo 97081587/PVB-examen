@@ -9,6 +9,7 @@ function handleSubmit(event) {
         name: formData.get('name'),
         email: formData.get('email'),
         password: formData.get('password'),
+        password_confirmation: formData.get('password_confirmation'),
     });
 }
 
@@ -56,7 +57,18 @@ export default function VariableTest() {
                         className="mt-1 w-full rounded border border-slate-300 px-3 py-2"
                     />
                 </div>
-
+                <div>
+                    <label htmlFor="password_confirmation" className="block text-sm font-medium text-slate-700">
+                        Confirm Password
+                    </label>
+                    <input
+                        type="password"
+                        id="password_confirmation"
+                        name="password_confirmation"
+                        required
+                        className="mt-1 w-full rounded border border-slate-300 px-3 py-2"
+                    />
+                </div>
                 <button type="submit" className="rounded bg-slate-900 px-4 py-2 font-medium text-white">
                     Register
                 </button>
