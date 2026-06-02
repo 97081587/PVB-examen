@@ -64,6 +64,7 @@ export default function VariableTest() {
                     <input
                         type="password"
                         id="password_confirmation"
+                        placeholder="Confirm your password"
                         name="password_confirmation"
                         required
                         className="mt-1 w-full rounded border border-slate-300 px-3 py-2"
