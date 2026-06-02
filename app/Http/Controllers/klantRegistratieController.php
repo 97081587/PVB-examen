@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Inertia\Inertia;
 
 class klantRegistratieController extends Controller
 {
     public function index()
     {
-        return view('klantRegistratie');
+        return Inertia::render('VariableTest');
     }
 
     public function store(Request $request)
