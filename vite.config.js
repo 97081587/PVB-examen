@@ -1,7 +1,9 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
+import react from '@vitejs/plugin-react';
 import { bunny } from 'laravel-vite-plugin/fonts';
 import tailwindcss from '@tailwindcss/vite';
+import inertia from '@inertiajs/vite';
 
 export default defineConfig({
     plugins: [
@@ -14,7 +16,9 @@ export default defineConfig({
                 }),
             ],
         }),
+        react(),
         tailwindcss(),
+        inertia(),
     ],
     server: {
         watch: {
@@ -22,13 +26,13 @@ export default defineConfig({
         },
     },
 });
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
+// import { defineConfig } from 'vite'
+// import react from '@vitejs/plugin-react'
+// import tailwindcss from '@tailwindcss/vite'
 
-export default defineConfig({
-  plugins: [
-    react(),
-    tailwindcss(),
-  ],
-})
+// export default defineConfig({
+//   plugins: [
+//     react(),
+//     tailwindcss(),
+//   ],
+// })
