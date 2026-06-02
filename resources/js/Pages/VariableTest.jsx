@@ -8,6 +8,8 @@ function handleSubmit(event) {
     router.post('/klantregistratie', {
         first_name: formData.get('first_name'),
         last_name: formData.get('last_name'),
+        adress: formData.get('adress'),
+        place_of_residence: formData.get('place_of_residence'),
         email: formData.get('email'),
         password: formData.get('password'),
         // password_confirmation: formData.get('password_confirmation'),
@@ -47,13 +49,26 @@ export default function VariableTest() {
                 </div>
 
                 <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-slate-700">
-                        Email
+                    <label htmlFor="adress" className="block text-sm font-medium text-slate-700">
+                        Address
                     </label>
                     <input
-                        type="email"
-                        id="email"
-                        name="email"
+                        type="text"
+                        id="adress"
+                        name="adress"
+                        required
+                        className="mt-1 w-full rounded border border-slate-300 px-3 py-2"
+                    />
+                </div>
+
+                <div>
+                    <label htmlFor="place_of_residence" className="block text-sm font-medium text-slate-700">
+                        Place of Residence
+                    </label>
+                    <input
+                        type="text"
+                        id="place_of_residence"
+                        name="place_of_residence"
                         required
                         className="mt-1 w-full rounded border border-slate-300 px-3 py-2"
                     />
