@@ -21,7 +21,7 @@ export default function Home({ auth }) {
                         Log in
                     </Link>
                     <Link
-                        href="/inschrijven"
+                        href="/klantregistratie"
                         className="border border-orange-500 text-orange-500 px-4 py-2 rounded-md font-medium"
                     >
                         Inschrijven
