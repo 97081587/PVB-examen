@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class klantRegistratieController extends Controller
@@ -36,6 +37,9 @@ class klantRegistratieController extends Controller
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
         ]);
+
+        Auth::login($user);
+        $request->session()->regenerate();
 
         // Redirect naar een gewenste pagina na registratie
         return redirect()->route('Dashboard')->with('success', 'Registratie succesvol!');

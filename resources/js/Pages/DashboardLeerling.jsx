@@ -1,13 +1,9 @@
 import React from 'react';
 import { Head } from '@inertiajs/react';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'; // Zorg dat je een layout hebt voor de sidebar
 
 export default function Dashboard({ auth, stats, lessons }) {
     return (
-        <AuthenticatedLayout
-            user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Mijn lessen</h2>}
-        >
+        <>
             <Head title="Leerling Dashboard" />
 
             <div className="py-12 bg-gray-50 min-h-screen">
@@ -112,6 +108,6 @@ export default function Dashboard({ auth, stats, lessons }) {
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </>
     );
 }

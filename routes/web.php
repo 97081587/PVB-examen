@@ -13,10 +13,12 @@ Route::get('/klantregistratie', [\App\Http\Controllers\klantRegistratieControlle
 Route::post('/klantregistratie', [\App\Http\Controllers\klantRegistratieController::class, 'store']);
 
 //laat klant login pagina zien
-Route::get('/login', [\App\Http\Controllers\klantLogInController::class, 'index']);
+Route::get('/login', [\App\Http\Controllers\klantLogInController::class, 'index'])->name('login');
 
 //verwerk klant login formulier
 Route::post('/login', [\App\Http\Controllers\klantLogInController::class, 'login']);
 
 //laat klant dashboard pagina zien
-Route::get('/dashboard', [\App\Http\Controllers\klantDashboardController::class, 'index'])->name('Dashboard');
+Route::get('/dashboard', [\App\Http\Controllers\klantDashboardController::class, 'index'])
+	->middleware('auth')
+	->name('Dashboard');
