@@ -2,7 +2,6 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Home;
-use Auth;
 
 //landingspagina
 Route::get('/', [Home::class, 'index'])->name('home');
