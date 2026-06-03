@@ -24,7 +24,7 @@ class rijlessenFactory extends Factory
             'start_time' => $this->faker->time(),
             'location' => $this->faker->address(),
             'instructor_name' => $this->faker->name(),
-            'status' => $this->faker->randomElement(['planned', 'completed', 'canceled']),
+            'status' => fake()->randomElement(['planned', 'completed', 'cancelled']),
             'note' => $this->faker->paragraph(),
         ];
     }
