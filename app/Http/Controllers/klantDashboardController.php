@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class klantDashboardController extends Controller
 {
@@ -35,5 +36,13 @@ class klantDashboardController extends Controller
                 'time' => Carbon::parse($nextLesson->start_time)->format('H:i'),
             ] : null,
         ]);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
     }
 }

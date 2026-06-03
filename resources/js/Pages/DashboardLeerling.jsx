@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import { Head } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
+
+
+const logout = () => {
+    router.post('/dashboard/logout');
+}
 
 export default function Dashboard({ auth, stats }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -40,16 +45,18 @@ export default function Dashboard({ auth, stats }) {
                     <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2">
                             <span className="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center font-bold text-sm">SB</span>
-                            <span className="text-gray-600 font-medium">Sara Bakker</span>
+                            <span className="text-gray-600 font-medium">{ auth?.user?.first_name }</span>
                         </div>
-                        <button className="text-gray-400 text-sm hover:text-red-500 transition">Uitloggen</button>
+                        <button className="text-gray-400 text-sm hover:text-red-500 transition" onClick={logout}>
+                            Uitloggen
+                        </button>
                     </div>
                 </header>
 
                 {/* Welkomstbalk - Tekst wordt kleiner op mobiel */}
                 <div className="bg-[#10b981] text-white p-3 px-4 md:px-6 flex items-start md:items-center gap-2 text-sm md:text-base">
                     <span>📅</span> 
-                    <span>Welkom terug, Sara — je volgende les is <strong>do 4 juni om 10:00</strong></span>
+                    <span>Welkom terug, { auth?.user?.first_name } — je volgende les is <strong>do 4 juni om 10:00</strong></span>
                 </div>
 
                 <div className="p-4 md:p-8 space-y-6 md:space-y-8">
