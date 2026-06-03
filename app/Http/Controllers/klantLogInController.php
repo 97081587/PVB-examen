@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class klantLogInController extends Controller
 {
@@ -23,10 +24,17 @@ class klantLogInController extends Controller
         ]);
 
         // Logica voor het inloggen van de gebruiker
-        $user = User::where('email', $validatedData['email'])->firstOrFail();
+        $user = User::where('email', $validatedData['email'])->first();
+        if (!$user) {
+            return redirect()->back()->with('error', 'Ongeldige inloggegevens');
+        }
+
         if (!Hash::check($validatedData['password'], $user->password)) {
             return redirect()->back()->with('error', 'Ongeldige inloggegevens');
         }
+
+        Auth::login($user);
+        $request->session()->regenerate();
 
         // Redirect naar een gewenste pagina na inloggen
         return redirect()->route('Dashboard')->with('success', 'Inloggen succesvol!');
