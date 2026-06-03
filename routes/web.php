@@ -19,4 +19,4 @@ Route::get('/login', [\App\Http\Controllers\klantLogInController::class, 'index'
 Route::post('/login', [\App\Http\Controllers\klantLogInController::class, 'login']);
 
 //laat klant dashboard pagina zien
-Route::get('/dashboard', [\App\Http\Controllers\klantDashboardController::class, 'index']);
+Route::get('/dashboard', [\App\Http\Controllers\klantDashboardController::class, 'index'])->name('Dashboard');

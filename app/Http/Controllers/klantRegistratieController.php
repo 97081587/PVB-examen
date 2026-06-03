@@ -38,6 +38,6 @@ class klantRegistratieController extends Controller
         ]);
 
         // Redirect naar een gewenste pagina na registratie
-        return redirect()->route('home')->with('success', 'Registratie succesvol!');
+        return redirect()->route('Dashboard')->with('success', 'Registratie succesvol!');
     }
 }
