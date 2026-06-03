@@ -87,22 +87,12 @@ export default function VariableTest() {
                     />
                 </div>
                 <div>
-                    {/* <label htmlFor="password_confirmation" className="block text-sm font-medium text-slate-700">
-                        Confirm Password
-                    </label>
-                    <input
-                        type="password"
-                        id="password_confirmation"
-                        placeholder="Confirm your password"
-                        name="password_confirmation"
-                        required
-                        className="mt-1 w-full rounded border border-slate-300 px-3 py-2"
-                    /> */}
                 </div>
                 <button type="submit" className="rounded bg-slate-900 px-4 py-2 font-medium text-white">
                     Register
                 </button>
             </form>
+            <form 
         </div>
     );
 }

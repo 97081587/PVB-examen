@@ -8,10 +8,10 @@ class klantLogInController extends Controller
 {
     public function index()
     {
-        return view('klantLogIn');
+        return view('VariableTest');
     }
 
-    public function store(Request $request)
+    public function login(Request $request)
     {
         // Validatie van de invoer
         $validatedData = $request->validate([
@@ -21,6 +21,7 @@ class klantLogInController extends Controller
 
         // Logica voor het inloggen van de gebruiker
         // Hier zou je de gebruikersgegevens kunnen controleren en een sessie kunnen starten
+
 
         // Redirect naar een gewenste pagina na inloggen
         return redirect()->route('home')->with('success', 'Inloggen succesvol!');
