@@ -3,15 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class klantLogInController extends Controller
 {
     public function index()
     {
-        return view('klantLogIn');
+        return Inertia::render('Test/loginTest');
     }
 
-    public function store(Request $request)
+    public function login(Request $request)
     {
         // Validatie van de invoer
         $validatedData = $request->validate([
@@ -20,9 +23,12 @@ class klantLogInController extends Controller
         ]);
 
         // Logica voor het inloggen van de gebruiker
-        // Hier zou je de gebruikersgegevens kunnen controleren en een sessie kunnen starten
+        $user = User::where('email', $validatedData['email'])->firstOrFail();
+        if (!Hash::check($validatedData['password'], $user->password)) {
+            return redirect()->back()->with('error', 'Ongeldige inloggegevens');
+        }
 
         // Redirect naar een gewenste pagina na inloggen
-        return redirect()->route('home')->with('success', 'Inloggen succesvol!');
+        return redirect()->route('he')->with('success', 'Inloggen succesvol!');
     }
 }

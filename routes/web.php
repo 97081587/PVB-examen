@@ -2,10 +2,18 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Home;
-use App\Http\Controllers\klantRegistratieController;
 
-Route::get('/', [Home::class, 'index']);
+//landingspagina
+Route::get('/', [Home::class, 'index'])->name('home');
 
-Route::get('/klantregistratie', [klantRegistratieController::class, 'index']);
+//laat registratie pagina zien
+Route::get('/klantregistratie', [\App\Http\Controllers\klantRegistratieController::class, 'index']);
 
-Route::post('/klantregistratie', [klantRegistratieController::class, 'store']);
+//verwerk registratie formulier
+Route::post('/klantregistratie', [\App\Http\Controllers\klantRegistratieController::class, 'store']);
+
+//laat login pagina zien
+Route::get('/login', [\App\Http\Controllers\klantLogInController::class, 'index']);
+
+//verwerk login formulier
+Route::post('/login', [\App\Http\Controllers\klantLogInController::class, 'login']);
