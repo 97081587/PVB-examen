@@ -2,6 +2,7 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Home;
+use Auth;
 
 //landingspagina
 Route::get('/', [Home::class, 'index'])->name('home');
@@ -22,3 +23,8 @@ Route::post('/login', [\App\Http\Controllers\klantLogInController::class, 'login
 Route::get('/dashboard', [\App\Http\Controllers\klantDashboardController::class, 'index'])
 	->middleware('auth')
 	->name('Dashboard');
+
+//verwerk klant logout
+Route::post('/dashboard/logout', [\App\Http\Controllers\klantDashboardController::class, 'logout'])
+    ->middleware('auth')
+    ->name('Dashboard.logout');
