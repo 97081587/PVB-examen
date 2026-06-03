@@ -11,6 +11,7 @@ class klantLogInController extends Controller
 {
     public function index()
     {
+        // return Inertia::render('LogIn');
         return Inertia::render('Test/loginTest');
     }
 
@@ -29,6 +30,6 @@ class klantLogInController extends Controller
         }
 
         // Redirect naar een gewenste pagina na inloggen
-        return redirect()->route('he')->with('success', 'Inloggen succesvol!');
+        return redirect()->route('Dashboard')->with('success', 'Inloggen succesvol!');
     }
 }
