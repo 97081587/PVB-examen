@@ -29,6 +29,6 @@ class klantLogInController extends Controller
         }
 
         // Redirect naar een gewenste pagina na inloggen
-        return redirect()->route('he')->with('success', 'Inloggen succesvol!');
+        return redirect()->route('Dashboard')->with('success', 'Inloggen succesvol!');
     }
 }
