@@ -11,7 +11,8 @@ class klantRegistratieController extends Controller
 {
     public function index()
     {
-        return Inertia::render('SignUp');
+        // return Inertia::render('SignUp');
+        return Inertia::render('Test/registratieTest');
     }
 
     public function store(Request $request)
@@ -35,6 +36,8 @@ class klantRegistratieController extends Controller
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
         ]);
+
+        // $token = $user->createToken('auth_token')->plainTextToken;
 
         // Redirect naar een gewenste pagina na registratie
         return redirect()->route('home')->with('success', 'Registratie succesvol!');

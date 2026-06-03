@@ -87,6 +87,30 @@ export default function VariableTest() {
                     />
                 </div>
                 <div>
+                    <label htmlFor="password_confirmation" className="block text-sm font-medium text-slate-700">
+                        Confirm Password
+                    </label>
+                    <input
+                        type="password"
+                        id="password_confirmation"
+                        name="password_confirmation"
+                        required
+                        className="mt-1 w-full rounded border border-slate-300 px-3 py-2"
+                    />
+                </div>
+                <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-slate-700">
+                        Email
+                    </label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        className="mt-1 w-full rounded border border-slate-300 px-3 py-2"
+                    />
+                </div>
+                <div>
                 </div>
                 <button type="submit" className="rounded bg-slate-900 px-4 py-2 font-medium text-white">
                     Register

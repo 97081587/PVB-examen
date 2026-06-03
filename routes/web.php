@@ -12,4 +12,8 @@ Route::get('/klantregistratie', [\App\Http\Controllers\klantRegistratieControlle
 //verwerk registratie formulier
 Route::post('/klantregistratie', [\App\Http\Controllers\klantRegistratieController::class, 'store']);
 
+//laat login pagina zien
 Route::get('/login', [\App\Http\Controllers\klantLogInController::class, 'index']);
+
+//verwerk login formulier
+Route::post('/login', [\App\Http\Controllers\klantLogInController::class, 'login']);
