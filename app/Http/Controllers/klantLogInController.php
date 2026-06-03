@@ -11,7 +11,8 @@ class klantLogInController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Test/loginTest');
+        return Inertia::render('LogIn');
+        // return Inertia::render('Test/loginTest');
     }
 
     public function login(Request $request)

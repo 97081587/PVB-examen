@@ -17,3 +17,6 @@ Route::get('/login', [\App\Http\Controllers\klantLogInController::class, 'index'
 
 //verwerk login formulier
 Route::post('/login', [\App\Http\Controllers\klantLogInController::class, 'login']);
+
+//laat dashboard pagina zien
+Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index']);
