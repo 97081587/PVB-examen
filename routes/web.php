@@ -24,6 +24,10 @@ Route::get('/dashboard', [\App\Http\Controllers\klantDashboardController::class,
 	->middleware('auth')
 	->name('Dashboard');
 
+Route::get('/kalender', function () {
+    return Inertia::render('Kalender');
+})->middleware('auth')->name('Kalender');    
+
 //verwerk klant logout
 Route::post('/dashboard/logout', [\App\Http\Controllers\klantDashboardController::class, 'logout'])
     ->middleware('auth')
