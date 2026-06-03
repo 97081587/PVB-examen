@@ -92,7 +92,6 @@ export default function VariableTest() {
                     Register
                 </button>
             </form>
-            <form 
         </div>
     );
 }
