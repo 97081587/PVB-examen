@@ -12,6 +12,7 @@ class klantRegistratieController extends Controller
     public function index()
     {
         return Inertia::render('SignUp');
+        // return Inertia::render('Test/registratieTest');
     }
 
     public function store(Request $request)
