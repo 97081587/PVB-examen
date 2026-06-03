@@ -6,17 +6,17 @@ use App\Http\Controllers\Home;
 //landingspagina
 Route::get('/', [Home::class, 'index'])->name('home');
 
-//laat registratie pagina zien
+//laat klant registratie pagina zien
 Route::get('/klantregistratie', [\App\Http\Controllers\klantRegistratieController::class, 'index']);
 
-//verwerk registratie formulier
+//verwerk  klant registratie formulier
 Route::post('/klantregistratie', [\App\Http\Controllers\klantRegistratieController::class, 'store']);
 
-//laat login pagina zien
+//laat klant login pagina zien
 Route::get('/login', [\App\Http\Controllers\klantLogInController::class, 'index']);
 
-//verwerk login formulier
+//verwerk klant login formulier
 Route::post('/login', [\App\Http\Controllers\klantLogInController::class, 'login']);
 
-//laat dashboard pagina zien
-Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index']);
+//laat klant dashboard pagina zien
+Route::get('/dashboard', [\App\Http\Controllers\klantDashboardController::class, 'index']);
