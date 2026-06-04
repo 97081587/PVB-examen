@@ -37,6 +37,7 @@ class kalenderController extends Controller
     public function updateNote(Request $request, Rijles $rijles)
     {
         // Controleer of de les wel van deze gebruiker is (veiligheid)
+        // dd($request->all());
         if ($rijles->user_id !== Auth::id()) {
             return back()->with('error', 'Niet toegestaan');
         }

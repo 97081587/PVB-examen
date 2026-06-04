@@ -22,12 +22,12 @@ return new class extends Migration
             $table->string('lesson_goal'); // Doel van de les, bijvoorbeeld "bochten", "parkeren", etc.
             $table->string('exam_info')->nullable(); // Optioneel, voor informatie over het examen als deze les daarvoor bedoeld is
             $table->string('lesson_funds')->nullable(); // Optioneel, voor informatie over lesgeld of tegoed
-            $table->string('instructor_name'); // Of een koppeling naar een instructeur-tabel
+            $table->string('instructor_name');
             $table->enum('status', ['planned', 'completed', 'cancelled'])->default('planned');
-            $table->text('note')->nullable(); // Voor de opmerkingen onderaan je screenshot
+            $table->text('note')->nullable(); // Voo opmerkingen
             $table->timestamps();
         });
-    }
+    }r
 
     /**
      * Reverse the migrations.
