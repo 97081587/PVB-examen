@@ -14,7 +14,7 @@ class LessenSeeder extends Seeder
     public function run(): void
     {
         rijlessen::create([
-            'user_id' => 1, // Koppel aan een bestaande gebruiker
+            'user_id' => 6, // Koppel aan een bestaande gebruiker
             'lesson_goal' => 'Bochten en parkeren',
             'date' => '2024-06-10',
             'start_time' => '10:00:00',

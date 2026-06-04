@@ -18,7 +18,7 @@ class rijlessenFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => 1, // Koppel aan een bestaande gebruiker
+            'user_id' => 6, // Koppel aan een bestaande gebruiker
             'lesson_goal' => $this->faker->sentence(),
             'date' => $this->faker->date(),
             'start_time' => $this->faker->time(),
