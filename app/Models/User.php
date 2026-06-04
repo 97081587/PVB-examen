@@ -3,7 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
+// use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -40,8 +40,8 @@ class User extends Authenticatable
         'password',
     ];
 
-    public function rijlessen(): HasMany
+    public function Rijles(): HasMany
     {
-        return $this->hasMany(rijlessen::class);
+        return $this->hasMany(Rijles::class);
     }
 }

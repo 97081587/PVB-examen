@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+// use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\rijlessen;
+use App\Models\Rijles;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,12 +20,15 @@ class DatabaseSeeder extends Seeder
         $this->call(MensenSeeder::class);
         $this->call(LessenSeeder::class);
         
-        rijlessen::factory()->count(20)->create();
+        Rijles::factory()->count(15)->create();
 
-        User::factory()->create([
-            'first_name' => 'Test',
-            'last_name' => 'User',
-            'email' => 'test@example.com',
-        ]);
+        // User::factory()->create([
+        //     'first_name' => 'Test',
+        //     'last_name' => 'User',
+        //     'adress' => 'Teststraat 1',
+        //     'place_of_residence' => 'Teststad',
+        //     'email' => 'test@example.com',
+        //     'password' => '12345678',
+        // ]);
     }
 }

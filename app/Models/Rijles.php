@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
 
-class rijlessen extends Model
+class Rijles extends Model
 {
     use HasFactory;
 
@@ -16,7 +17,11 @@ class rijlessen extends Model
         'user_id',
         'date',
         'start_time',
+        'end_time',
         'location',
+        'lesson_goal',
+        'exam_info',
+        'lesson_funds',
         'instructor_name',
         'status',
         'note',

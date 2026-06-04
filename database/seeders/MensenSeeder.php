@@ -13,6 +13,17 @@ class MensenSeeder extends Seeder
      */
     public function run(): void
     {
+        // Klant
+        User::create([
+            'first_name' => 'Klant',
+            'last_name' => 'Demo',
+            'email' => 'klant@test.nl',
+            'password' => Hash::make('12345678'),
+            'adress' => 'Klantstraat 1',
+            'place_of_residence' => 'Klantstad',
+            'role' => 'klant',
+        ]);
+
         // Eigenaar
         User::create([
             'first_name' => 'Eigenaar',
