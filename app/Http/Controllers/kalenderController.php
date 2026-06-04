@@ -34,14 +34,15 @@ class kalenderController extends Controller
     }
 
     // Functie voor het opslaan van de opmerking
-    public function updateNote(Request $request, Rijles $rijles)
+    public function updateNote(Request $request, $id)
     {
         // Controleer of de les wel van deze gebruiker is (veiligheid)
         // dd($request->all());
+        $rijles = Rijles::find($id);
         if ($rijles->user_id !== Auth::id()) {
             return back()->with('error', 'Niet toegestaan');
         }
-
+        // dd($request->all());
         $request->validate([
             'note' => 'nullable|string|max:1000',
         ]);
