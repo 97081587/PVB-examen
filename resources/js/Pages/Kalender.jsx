@@ -83,11 +83,9 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                                         Adres
                                     </p>
                                     <p className="text-gray-900 font-medium">
-                                        {auth?.user?.address}{" "}
-                                        {auth?.user?.house_number}
+                                        {auth?.user?.adress}
                                         <br />
-                                        {auth?.user?.zip_code}{" "}
-                                        {auth?.user?.city}
+                                        {auth?.user?.place_of_residence}
                                     </p>
                                 </div>
                             </div>
