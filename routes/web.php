@@ -34,6 +34,10 @@ Route::post('/dashboard/logout', [\App\Http\Controllers\klantDashboardController
     ->name('Dashboard.logout');
 
 // klant kan rijlessen wijzigen en annuleren
-Route::get('/dashboard/rijlessen', [\App\Http\Controllers\klantRijlessenController::class, 'index']);
-    // ->middleware('auth')
-    // ->name('klant.rijlessen');
+Route::get('/dashboard/rijlessen', [\App\Http\Controllers\klantRijlessenController::class, 'index'])
+    ->middleware('auth')
+    ->name('klant.rijlessen');
+
+Route::post('/dashboard/rijlessen', [\App\Http\Controllers\klantRijlessenController::class, 'fetch'])
+    ->middleware('auth')
+    ->name('klant.rijlessen.fetch');
