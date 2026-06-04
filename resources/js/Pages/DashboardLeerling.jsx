@@ -7,6 +7,7 @@ const logout = () => {
 
 export default function Dashboard({ auth, rijlessen, stats }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
     const geplandeLessen =
         rijlessen?.filter((les) => les.status === "gepland") || [];
@@ -14,6 +15,69 @@ export default function Dashboard({ auth, rijlessen, stats }) {
     return (
         <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row">
             <Head title="Leerling Dashboard" />
+            {/* Profiel Modal Overlay */}
+            {isProfileModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+                    <div className="bg-white rounded-3xl shadow-xl w-full max-w-md overflow-hidden transform transition-all">
+                        {/* Header van de modal */}
+                        <div className="bg-[#10b981] p-6 text-white flex justify-between items-center">
+                            <h3 className="text-xl font-bold">Mijn Gegevens</h3>
+                            <button
+                                onClick={() => setIsProfileModalOpen(false)}
+                                className="text-2xl hover:text-emerald-200"
+                            >
+                                ✕
+                            </button>
+                        </div>
+
+                        {/* Inhoud van de modal - Gegevens van inschrijving */}
+                        <div className="p-6 space-y-4">
+                            <div className="grid grid-cols-2 gap-4 border-b border-gray-50 pb-4">
+                                <div>
+                                    <p className="text-[10px] uppercase font-bold text-gray-400">
+                                        Naam
+                                    </p>
+                                    <p className="text-gray-900 font-medium">
+                                        {auth?.user?.first_name}{" "}
+                                        {auth?.user?.last_name}
+                                    </p>
+                                </div>
+                                
+                            </div>
+
+                            <div className="space-y-3">
+                                <div>
+                                    <p className="text-[10px] uppercase font-bold text-gray-400">
+                                        Emailadres
+                                    </p>
+                                    <p className="text-gray-900 font-medium">
+                                        {auth?.user?.email}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p className="text-[10px] uppercase font-bold text-gray-400">
+                                        Adres
+                                    </p>
+                                    <p className="text-gray-900 font-medium">
+                                        {auth?.user?.address}{" "}
+                                        {auth?.user?.house_number}
+                                        <br />
+                                        {auth?.user?.zip_code}{" "}
+                                        {auth?.user?.city}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <button
+                                onClick={() => setIsProfileModalOpen(false)}
+                                className="w-full mt-6 bg-gray-100 text-gray-600 py-3 rounded-xl font-bold hover:bg-gray-200 transition"
+                            >
+                                Sluiten
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Mobiele Header - Alleen zichtbaar op kleine schermen */}
             <div className="md:hidden bg-[#1a1a1a] text-white p-4 flex justify-between items-center">
@@ -58,11 +122,15 @@ export default function Dashboard({ auth, rijlessen, stats }) {
                 <header className="hidden md:flex bg-white p-4 justify-between items-center shadow-sm">
                     <div className="text-xl font-bold">Dashboard</div>
                     <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-2">
+                        <div
+                            className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition"
+                            onClick={() => setIsProfileModalOpen(true)}
+                        >
                             <span className="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center font-bold text-sm">
-                                SB
+                                {auth?.user?.first_name[0]}
+                                {auth?.user?.last_name[0]}
                             </span>
-                            <span className="text-gray-600 font-medium">
+                            <span className="text-gray-600 font-medium hidden sm:block">
                                 {auth?.user?.first_name}
                             </span>
                         </div>
@@ -134,7 +202,7 @@ export default function Dashboard({ auth, rijlessen, stats }) {
                                         </th>
                                     </tr>
                                 </thead>
-                                
+
                                 <tbody className="divide-y divide-gray-100">
                                     {geplandeLessen.length > 0 ? (
                                         geplandeLessen.map((les) => (
@@ -143,9 +211,7 @@ export default function Dashboard({ auth, rijlessen, stats }) {
                                                 date={les.date} // Zorg dat de naam 'datum' klopt met DB
                                                 time={les.start_time} // Zorg dat de naam 'tijd' klopt met DB
                                                 address={les.location} // Zorg dat de naam 'locatie' klopt met DB
-                                                instructor={
-                                                    les.instructor_naam
-                                                }
+                                                instructor={les.instructor_naam}
                                             />
                                         ))
                                     ) : (
