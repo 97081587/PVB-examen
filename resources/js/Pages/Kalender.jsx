@@ -83,11 +83,9 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                                         Adres
                                     </p>
                                     <p className="text-gray-900 font-medium">
-                                        {auth?.user?.address}{" "}
-                                        {auth?.user?.house_number}
+                                        {auth?.user?.adress}
                                         <br />
-                                        {auth?.user?.zip_code}{" "}
-                                        {auth?.user?.city}
+                                        {auth?.user?.place_of_residence}
                                     </p>
                                 </div>
                             </div>
@@ -134,7 +132,9 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                     <div className="text-xl font-bold">Kalender</div>
                     <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2">
-                            <span className="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center font-bold text-sm">
+                            <span
+                            onClick={() => setIsProfileModalOpen(true)}
+                            className="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center font-bold text-sm">
                                 {auth?.user?.first_name[0]}
                                 {auth?.user?.last_name[0]}
                             </span>
