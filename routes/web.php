@@ -34,11 +34,11 @@ Route::post('/dashboard/logout', [\App\Http\Controllers\klantDashboardController
     ->name('Dashboard.logout');
 
 // klant kan rijlessen wijzigen en annuleren
-Route::get('/dashboard/rijlessen', [\App\Http\Controllers\klantRijlessenController::class, 'index'])
+Route::get('/dashboard/kalender', [\App\Http\Controllers\KalenderController::class, 'index'])
     ->middleware('auth')
     ->name('klant.rijlessen');
 
-//haal rijles data op voor een specifieke rijles
-Route::get('/dashboard/rijlessen/{id}', [\App\Http\Controllers\klantRijlessenController::class, 'show'])
+// Route voor het opslaan van de opmerking
+Route::patch('/dashboard/kalender/{id}/update-note', [\App\Http\Controllers\KalenderController::class, 'updateNote'])
     ->middleware('auth')
-    ->name('klant.rijlessen.show');
+    ->name('klant.updateNote');
