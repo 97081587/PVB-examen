@@ -10,13 +10,18 @@ export default function CalendarDashboard({ auth, rijlessen }) {
     const [selectedLesson, setSelectedLesson] = useState(lessons[0] || null);
 
     const { data, setData, patch, processing } = useForm({
-        lessonobjective: selectedLesson?.lessonobjective || "",
-        note: "",
+        lessonobjective: selectedLesson?.lesson_goal || "",
+        note: selectedLesson?.note || "",
     });
+
+    const saveNote = (e) => {
+        e.preventDefault();
+        patch(`/dashboard/kalender/${selectedLesson.id}/update-note`);
+    };
 
     const handleSelectLesson = (lesson) => {
         setSelectedLesson(lesson);
-        setData("lessonobjective", lesson.lessonobjective || "");
+        setData("lessonobjective", lesson.lesson_goal || "");
     };
 
     const saveNote = (e) => {

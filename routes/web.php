@@ -38,7 +38,6 @@ Route::get('/dashboard/kalender', [\App\Http\Controllers\KalenderController::cla
     ->middleware('auth')
     ->name('klant.rijlessen');
 
-//haal rijles data op voor een specifieke rijles
-// Route::get('/dashboard/rijlessen/{id}', [\App\Http\Controllers\klantRijlessenController::class, 'show'])
-//     ->middleware('auth')
-//     ->name('klant.rijlessen.show');
+Route::post('/dashboard/kalender/{id}/update-note', [\App\Http\Controllers\KalenderController::class, 'updateNote'])
+    ->middleware('auth')
+    ->name('klant.updateNote');

@@ -19,7 +19,7 @@ class kalenderController extends Controller
             ->orderBy('date', 'asc')
             ->get();
 
-        // 3. Stuur de data naar de React view 'Dashboard'
+        // 3. Stuur de data naar de React view
         return Inertia::render('Kalender', [
             'auth' => [
                 'user' => $user,
