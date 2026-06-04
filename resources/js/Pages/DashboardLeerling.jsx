@@ -31,10 +31,10 @@ export default function Dashboard({ auth, stats }) {
                     <a href="#" className="flex items-center p-3 bg-gray-800 rounded-lg text-emerald-400">
                         <span className="mr-3">📊</span> Dashboard
                     </a>
-                    <a href="#" className="flex items-center p-3 hover:bg-gray-800 rounded-lg transition text-gray-300">
+                    <a href="/dashboard/rijlessen" className="flex items-center p-3 hover:bg-gray-800 rounded-lg transition text-gray-300">
                         <span className="mr-3">🚗</span> Mijn lessen
                     </a>
-                    <a href="/kalender" className="flex items-center p-3 hover:bg-gray-800 rounded-lg transition text-gray-300">
+                    <a href="/dashboard/kalender" className="flex items-center p-3 hover:bg-gray-800 rounded-lg transition text-gray-300">
                         <span className="mr-3">📅</span> Kalender
                     </a>
                 </nav>

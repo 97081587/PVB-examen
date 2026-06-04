@@ -23,7 +23,8 @@ Route::get('/dashboard', [\App\Http\Controllers\klantDashboardController::class,
 	->middleware('auth')
 	->name('Dashboard');
 
-Route::get('/kalender', function () {
+//laat klant kalender pagina zien
+Route::get('/dashboard/kalender', function () {
     return Inertia::render('Kalender');
 })->middleware('auth')->name('Kalender');    
 
@@ -31,3 +32,8 @@ Route::get('/kalender', function () {
 Route::post('/dashboard/logout', [\App\Http\Controllers\klantDashboardController::class, 'logout'])
     ->middleware('auth')
     ->name('Dashboard.logout');
+
+// klant kan rijlessen wijzigen en annuleren
+Route::get('/dashboard/rijlessen', [\App\Http\Controllers\klantRijlessenController::class, 'index']);
+    // ->middleware('auth')
+    // ->name('klant.rijlessen');
