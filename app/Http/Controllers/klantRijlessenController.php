@@ -13,10 +13,10 @@ class klantRijlessenController extends Controller
         return Inertia::render('Test/klantRijlessenTest');
     }
 
-    public function fetch(Request $request)
+    public function show($id)
     {
-    $les = Rijles::find($request->id);
+        $rijles = Rijles::findOrFail($id);
 
-    return response()->json($les);
+        return response()->json($rijles);
     }
 }

@@ -38,6 +38,6 @@ Route::get('/dashboard/rijlessen', [\App\Http\Controllers\klantRijlessenControll
     ->middleware('auth')
     ->name('klant.rijlessen');
 
-Route::post('/dashboard/rijlessen', [\App\Http\Controllers\klantRijlessenController::class, 'fetch'])
+Route::get('/dashboard/rijlessen/{id}', [\App\Http\Controllers\klantRijlessenController::class, 'show'])
     ->middleware('auth')
-    ->name('klant.rijlessen.fetch');
+    ->name('klant.rijlessen.show');
