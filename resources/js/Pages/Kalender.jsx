@@ -1,120 +1,315 @@
 import React, { useState } from "react";
-import { Head, router } from "@inertiajs/react";
+import { Head, useForm, router } from "@inertiajs/react";
 
 const logout = () => {
-    router.post('/dashboard/logout');
-}
+    router.post("/dashboard/logout");
+};
 
 export default function CalendarDashboard({ auth }) {
-    const daysInMonth = Array.from({ length: 30 }, (_, i) => i + 1);
-    const today = 15;
-    const plannedLessons = [5, 12, 19, 26];
+    const lessons = [
+        {
+            id: 1,
+            date: "2026-06-02",
+            time: "10:00",
+            instructor: "John Doe",
+            location: "123 Main St",
+            status: "gepland",
+            dayNum: 2,
+            lessonobjective: "Basisvaardigheden",
+        },
+        {
+            id: 2,
+            date: "2026-06-05",
+            time: "14:00",
+            instructor: "Jane Smith",
+            location: "456 Elm St",
+            status: "gepland",
+            dayNum: 5,
+            lessonobjective: "Geavanceerde vaardigheden",
+        },
+        {
+            id: 3,
+            date: "2026-06-10",
+            time: "09:00",
+            instructor: "Bob Johnson",
+            location: "789 Oak St",
+            status: "gepland",
+            dayNum: 10,
+            lessonobjective: "Basisvaardigheden",
+        },
+        {
+            id: 4,
+            date: "2026-06-15",
+            time: "16:00",
+            instructor: "Alice Brown",
+            location: "321 Pine St ",
+            status: "gepland",
+            dayNum: 15,
+            lessonobjective: "Geavanceerde vaardigheden",
+        },
+        {
+            id: 5,
+            date: "2026-06-20",
+            time: "11:00",
+            instructor: "Charlie Green",
+            location: "654 Cedar St",
+            status: "gepland",
+            dayNum: 20,
+            lessonobjective: "Basisvaardigheden",
+        },
+    ];
+
+    const [selectedLesson, setSelectedLesson] = useState(lessons[0]);
+
+    const { data, setData, patch, processing } = useForm({
+        lessonobjective: selectedLesson.lessonobjective || "",
+    });
+
+    const handleSelectLesson = (lesson) => {
+        setSelectedLesson(lesson);
+        setData("lessonobjective", lesson.lessonobjective || "");
+    };
+
+    const saveNote = (e) => {
+        e.preventDefault();
+        alert(
+            `Lesdoelstelling voor les op ${selectedLesson.date} opgeslagen: ${data.lessonobjective}`,
+        );
+    };
+
+    const cancelLesson = () => {
+        if (
+            confirm(
+                `Weet je zeker dat je de les op ${selectedLesson.date} wilt annuleren?`,
+            )
+        ) {
+            alert(`Les op ${selectedLesson.date} geannuleerd.`);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
-
-            {/* Sidebar (Zelfde stijl als screenshot) */}
-             <aside className="md:block w-full md:w-64 bg-[#1a1a1a] text-white flex flex-col transition-all duration-300">
+            {/* Sidebar */}
+            <aside className="md:block w-full md:w-64 bg-[#1a1a1a] text-white flex flex-col transition-all duration-300">
                 <div className="hidden md:block p-6 text-2xl font-bold border-b border-gray-800">
-                    Easy Drive 4 All
+                    Easy Drive <span className="text-orange-500">4 </span>All
                 </div>
                 <nav className="flex-1 p-4 space-y-2">
-                    <div className="text-gray-500 text-xs font-bold uppercase mb-4 px-3">Mijn Omgeving</div>
-                    <a href="/dashboard" className="flex items-center p-3 hover:bg-gray-800 rounded-lg transition text-gray-300">
+                    <div className="text-gray-500 text-xs font-bold uppercase mb-4 px-3">
+                        Mijn Omgeving
+                    </div>
+                    <a
+                        href="/dashboard"
+                        className="flex items-center p-3 hover:bg-gray-800 rounded-lg transition text-gray-300"
+                    >
                         <span className="mr-3">📊</span> Dashboard
                     </a>
-                    <a href="#" className="flex items-center p-3 hover:bg-gray-800 rounded-lg transition text-gray-300">
+                    <a
+                        href="#"
+                        className="flex items-center p-3 hover:bg-gray-800 rounded-lg transition text-gray-300"
+                    >
                         <span className="mr-3">🚗</span> Mijn lessen
                     </a>
-                    <a href="/kalender" className="flex items-center p-3 bg-gray-800 rounded-lg text-emerald-400">
+                    <a
+                        href="/kalender"
+                        className="flex items-center p-3 bg-gray-800 rounded-lg text-emerald-400"
+                    >
                         <span className="mr-3">📅</span> Kalender
                     </a>
                 </nav>
             </aside>
 
-            <main className="flex-1 ">
+            <main className="flex-1">
                 <Head title="Kalender" />
 
-                {/* Desktop Header - Verbergt op mobiel */}
+                {/* Desktop Header */}
                 <header className="hidden md:flex bg-white p-4 justify-between items-center shadow-sm">
-                    <div className="text-xl font-bold">Dashboard</div>
+                    <div className="text-xl font-bold">Kalender</div>
                     <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2">
-                            <span className="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center font-bold text-sm">SB</span>
-                            <span className="text-gray-600 font-medium">{auth?.user?.first_name}</span>
+                            <span className="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center font-bold text-sm">
+                                {auth?.user?.first_name[0]}
+                                {auth?.user?.last_name[0]}
+                            </span>
+                            <span className="text-gray-600 font-medium">
+                                {auth?.user?.first_name}
+                            </span>
                         </div>
-                        <button className="text-gray-400 text-sm hover:text-red-500 transition" onClick={logout}>
+                        <button
+                            className="text-gray-400 text-sm hover:text-red-500 transition"
+                            onClick={logout}
+                        >
                             Uitloggen
                         </button>
                     </div>
                 </header>
 
-                <div className="max-w-4xl mx-auto space-y-6">
-                    <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden max-w-md">
-                        {/* 1. Groene Header */}
-                        <div className="bg-[#10b981] p-4 flex justify-between items-center text-white font-bold">
-                            <button className="hover:bg-white/20 w-8 h-8 rounded-lg transition">
-                                ‹
-                            </button>
-                            <span className="text-lg">Juni 2026</span>
-                            <button className="hover:bg-white/20 w-8 h-8 rounded-lg transition">
-                                ›
-                            </button>
-                        </div>
-
-                        <div className="p-6">
-                            {/* 2. Dagen van de week */}
-                            <div className="grid grid-cols-7 mb-4">
+                {/* DE GRID STRUCTUUR START HIER */}
+                <div className="p-4 md:p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {/* LINKERKOLOM: Kalender en Tabel */}
+                    <div className="space-y-6">
+                        {/* Kalender */}
+                        <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+                            <div className="bg-[#10b981] p-4 text-center text-white font-bold">
+                                Juni 2026
+                            </div>
+                            <div className="p-4 grid grid-cols-7 gap-1">
                                 {["Ma", "Di", "Wo", "Do", "Vr", "Za", "Zo"].map(
-                                    (day) => (
+                                    (d) => (
                                         <div
-                                            key={day}
-                                            className="text-center text-xs font-bold text-gray-400 py-2"
+                                            key={d}
+                                            className="text-center text-[10px] font-bold text-gray-300 uppercase"
                                         >
-                                            {day}
+                                            {d}
                                         </div>
                                     ),
                                 )}
-                            </div>
-
-                            {/* 3. Het Grid met de dagen */}
-                            <div className="grid grid-cols-7 gap-y-2">
-                                {daysInMonth.map((day) => {
-                                    const isToday = day === today;
-                                    const isPlanned =
-                                        plannedLessons.includes(day);
-
+                                {[...Array(30)].map((_, i) => {
+                                    const day = i + 1;
+                                    const lesson = lessons.find(
+                                        (l) => l.dayNum === day,
+                                    );
                                     return (
                                         <div
-                                            key={day}
-                                            className="flex justify-center items-center py-1"
+                                            key={i}
+                                            onClick={() =>
+                                                lesson &&
+                                                handleSelectLesson(lesson)
+                                            }
+                                            className={`h-10 flex items-center justify-center rounded-lg text-sm font-bold cursor-pointer transition
+                                            ${lesson ? "bg-emerald-50 text-emerald-600 border border-emerald-100 hover:bg-emerald-100" : "text-gray-400 hover:bg-gray-50"}
+                                            ${selectedLesson?.dayNum === day ? "ring-2 ring-emerald-500 ring-offset-2" : ""}
+                                            ${day === 2 ? "bg-orange-500 text-white shadow-md" : ""}
+                                        `}
                                         >
-                                            <div
-                                                className={`
-                                    w-10 h-8 flex items-center justify-center rounded-lg font-bold text-sm transition
-                                    ${isToday ? "bg-[#f97316] text-white shadow-md" : ""}
-                                    ${isPlanned && !isToday ? "bg-[#ecfdf5] text-[#10b981]" : ""}
-                                    ${!isToday && !isPlanned ? "text-gray-600 hover:bg-gray-50" : ""}
-                                `}
-                                            >
-                                                {day}
-                                            </div>
+                                            {day}
                                         </div>
                                     );
                                 })}
                             </div>
+                        </div>
 
-                            {/* 4. Legenda (zoals in je screenshot) */}
-                            <div className="mt-8 pt-4 border-t border-gray-50 flex items-center gap-6 text-xs font-medium text-gray-500">
-                                <div className="flex items-center gap-2">
-                                    <div className="w-4 h-4 bg-[#ecfdf5] rounded border border-emerald-100"></div>
-                                    <span>Les gepland</span>
+                        {/* Tabel */}
+                        <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+                            <table className="w-full text-left">
+                                <thead className="bg-gray-50 text-gray-400 uppercase font-bold">
+                                    <tr>
+                                        <th className="px-4 py-3 text-xs">
+                                            Datum
+                                        </th>
+                                        <th className="px-4 py-3 text-xs">
+                                            Status
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-gray-100">
+                                    {lessons.map((lesson) => (
+                                        <tr
+                                            key={lesson.id}
+                                            onClick={() =>
+                                                handleSelectLesson(lesson)
+                                            }
+                                            className={`cursor-pointer transition ${selectedLesson?.id === lesson.id ? "bg-emerald-50" : "hover:bg-gray-50"}`}
+                                        >
+                                            <td className="px-6 py-4">
+                                                <div className="font-bold">
+                                                    {lesson.date}
+                                                </div>
+                                                <div className="text-xs text-gray-500">
+                                                    {lesson.time} -{" "}
+                                                    {lesson.instructor}
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <span
+                                                    className={`px-3 py-1 rounded-full text-xs font-bold uppercase ${lesson.status === "gepland" ? "bg-emerald-100 text-emerald-800" : "bg-gray-100 text-gray-800"}`}
+                                                >
+                                                    {lesson.status}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    {/* RECHTERKOLOM: Lesdetails & Opmerkingen */}
+                    <div className="space-y-6">
+                        <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <h3 className="text-2xl font-bold text-gray-900">
+                                        Les Details
+                                    </h3>
+                                    <p className="text-gray-600 mt-1">
+                                        {selectedLesson.date} om{" "}
+                                        {selectedLesson.time}
+                                    </p>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                    <div className="w-4 h-4 bg-[#f97316] rounded shadow-sm"></div>
-                                    <span>Vandaag</span>
+                                {selectedLesson.status === "gepland" && (
+                                    <button
+                                        onClick={cancelLesson}
+                                        className="text-red-500 text-xs font-bold uppercase hover:underline"
+                                    >
+                                        Annuleer les
+                                    </button>
+                                )}
+                            </div>
+
+                            <div className="grid grid-cols-1 gap-4 mt-6 mb-8">
+                                <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl text-sm">
+                                    <span className="text-lg">📍</span>
+                                    <div>
+                                        <p className="font-bold">Ophaaladres</p>
+                                        <p className="text-gray-600">
+                                            {selectedLesson.location}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl text-sm">
+                                    <span className="text-lg">👨‍🏫</span>
+                                    <div>
+                                        <p className="font-bold">Instructeur</p>
+                                        <p className="text-gray-600">
+                                            {selectedLesson.instructor}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl text-sm">
+                                    <span className="text-lg">🎯</span>
+                                    <div>
+                                        <p className="font-bold">
+                                            Lesdoelstelling
+                                        </p>
+                                        <p className="text-gray-600">
+                                            {selectedLesson.lessonobjective}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
+
+                            <form onSubmit={saveNote} className="space-y-4">
+                                <label className="block text-[10px] font-bold uppercase text-gray-400">
+                                    Opmerking bij deze les
+                                </label>
+                                <textarea
+                                    className="w-full bg-gray-900 text-white rounded-2xl p-4 text-sm min-h-37.5 focus:ring-2 focus:ring-emerald-500 border-none placeholder-gray-500"
+                                    placeholder="Schrijf hier een bericht voor je instructeur..."
+                                    value={data.note}
+                                    required
+                                    onChange={(e) =>
+                                        setData("note", e.target.value)
+                                    }
+                                />
+                                <button
+                                    type="submit"
+                                    disabled={processing}
+                                    className="w-full bg-emerald-500 text-white py-3 rounded-xl text-sm font-bold hover:bg-emerald-600 transition shadow-lg shadow-emerald-100 disabled:opacity-50"
+                                >
+                                    Opmerking opslaan
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
