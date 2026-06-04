@@ -16,7 +16,7 @@ class klantRijlessenController extends Controller
     public function show($id)
     {
         $rijles = Rijles::findOrFail($id);
-
+        //json test
         return response()->json($rijles);
     }
 }
