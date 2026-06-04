@@ -38,6 +38,7 @@ Route::get('/dashboard/rijlessen', [\App\Http\Controllers\klantRijlessenControll
     ->middleware('auth')
     ->name('klant.rijlessen');
 
+//haal rijles data op voor een specifieke rijles
 Route::get('/dashboard/rijlessen/{id}', [\App\Http\Controllers\klantRijlessenController::class, 'show'])
     ->middleware('auth')
     ->name('klant.rijlessen.show');
