@@ -5,64 +5,13 @@ const logout = () => {
     router.post("/dashboard/logout");
 };
 
-export default function CalendarDashboard({ auth }) {
-    const lessons = [
-        {
-            id: 1,
-            date: "2026-06-02",
-            time: "10:00",
-            instructor: "John Doe",
-            location: "123 Main St",
-            status: "gepland",
-            dayNum: 2,
-            lessonobjective: "Basisvaardigheden",
-        },
-        {
-            id: 2,
-            date: "2026-06-05",
-            time: "14:00",
-            instructor: "Jane Smith",
-            location: "456 Elm St",
-            status: "gepland",
-            dayNum: 5,
-            lessonobjective: "Geavanceerde vaardigheden",
-        },
-        {
-            id: 3,
-            date: "2026-06-10",
-            time: "09:00",
-            instructor: "Bob Johnson",
-            location: "789 Oak St",
-            status: "gepland",
-            dayNum: 10,
-            lessonobjective: "Basisvaardigheden",
-        },
-        {
-            id: 4,
-            date: "2026-06-15",
-            time: "16:00",
-            instructor: "Alice Brown",
-            location: "321 Pine St ",
-            status: "gepland",
-            dayNum: 15,
-            lessonobjective: "Geavanceerde vaardigheden",
-        },
-        {
-            id: 5,
-            date: "2026-06-20",
-            time: "11:00",
-            instructor: "Charlie Green",
-            location: "654 Cedar St",
-            status: "gepland",
-            dayNum: 20,
-            lessonobjective: "Basisvaardigheden",
-        },
-    ];
-
-    const [selectedLesson, setSelectedLesson] = useState(lessons[0]);
+export default function CalendarDashboard({ auth, rijlessen }) {
+    const lessons = rijlessen || [];
+    const [selectedLesson, setSelectedLesson] = useState(lessons[0] || null);
 
     const { data, setData, patch, processing } = useForm({
-        lessonobjective: selectedLesson.lessonobjective || "",
+        lessonobjective: selectedLesson?.lessonobjective || "",
+        note: "",
     });
 
     const handleSelectLesson = (lesson) => {
@@ -216,8 +165,8 @@ export default function CalendarDashboard({ auth }) {
                                                     {lesson.date}
                                                 </div>
                                                 <div className="text-xs text-gray-500">
-                                                    {lesson.time} -{" "}
-                                                    {lesson.instructor}
+                                                    {lesson.start_time} -{" "}
+                                                    {lesson.instructor_name}
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">
@@ -244,7 +193,7 @@ export default function CalendarDashboard({ auth }) {
                                     </h3>
                                     <p className="text-gray-600 mt-1">
                                         {selectedLesson.date} om{" "}
-                                        {selectedLesson.time}
+                                        {selectedLesson.start_time}
                                     </p>
                                 </div>
                                 {selectedLesson.status === "gepland" && (
@@ -272,7 +221,7 @@ export default function CalendarDashboard({ auth }) {
                                     <div>
                                         <p className="font-bold">Instructeur</p>
                                         <p className="text-gray-600">
-                                            {selectedLesson.instructor}
+                                            {selectedLesson.instructor_name}
                                         </p>
                                     </div>
                                 </div>
@@ -283,7 +232,7 @@ export default function CalendarDashboard({ auth }) {
                                             Lesdoelstelling
                                         </p>
                                         <p className="text-gray-600">
-                                            {selectedLesson.lessonobjective}
+                                            {selectedLesson.lesson_goal}
                                         </p>
                                     </div>
                                 </div>
