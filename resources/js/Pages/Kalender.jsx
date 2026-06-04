@@ -22,7 +22,7 @@ export default function CalendarDashboard({ auth, rijlessen }) {
     const saveNote = (e) => {
         e.preventDefault();
         alert(
-            `Lesdoelstelling voor les op ${selectedLesson.date} opgeslagen: ${data.lessonobjective}`,
+            `Opmerking voor les op ${selectedLesson.date} opgeslagen: ${data.note}`,
         );
         patch(`/dashboard/kalender/${selectedLesson.id}/update-note`);
     };
