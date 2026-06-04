@@ -40,8 +40,8 @@ class User extends Authenticatable
         'password',
     ];
 
-    public function rijlessen(): HasMany
+    public function Rijles(): HasMany
     {
-        return $this->hasMany(rijlessen::class);
+        return $this->hasMany(Rijles::class);
     }
 }

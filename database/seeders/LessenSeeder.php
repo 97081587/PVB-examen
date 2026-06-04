@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\rijlessen;
+use App\Models\Rijles;
 
 class LessenSeeder extends Seeder
 {
@@ -16,7 +16,7 @@ class LessenSeeder extends Seeder
     {
         $userId = User::query()->where('role', 'klant')->value('id');
 
-        rijlessen::create([
+        Rijles::create([
             'user_id' => $userId,
             'date' => '2024-06-10',
             'start_time' => '10:00:00',
