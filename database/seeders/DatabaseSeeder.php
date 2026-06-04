@@ -20,12 +20,15 @@ class DatabaseSeeder extends Seeder
         $this->call(MensenSeeder::class);
         $this->call(LessenSeeder::class);
         
-        rijlessen::factory()->count(20)->create();
+        rijlessen::factory()->count(15)->create();
 
-        User::factory()->create([
-            'first_name' => 'Test',
-            'last_name' => 'User',
-            'email' => 'test@example.com',
-        ]);
+        // User::factory()->create([
+        //     'first_name' => 'Test',
+        //     'last_name' => 'User',
+        //     'adress' => 'Teststraat 1',
+        //     'place_of_residence' => 'Teststad',
+        //     'email' => 'test@example.com',
+        //     'password' => '12345678',
+        // ]);
     }
 }
