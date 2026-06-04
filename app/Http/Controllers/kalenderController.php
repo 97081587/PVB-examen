@@ -46,7 +46,7 @@ class kalenderController extends Controller
         ]);
 
         $rijles->update([
-            'opmerking' => $request->note // Check of de kolom in DB 'opmerking' heet
+            'note' => $request->note // Check of de kolom in DB 'note' heet
         ]);
 
         return back();
