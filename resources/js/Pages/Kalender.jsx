@@ -14,11 +14,6 @@ export default function CalendarDashboard({ auth, rijlessen }) {
         note: selectedLesson?.note || "",
     });
 
-    const saveNote = (e) => {
-        e.preventDefault();
-        patch(`/dashboard/kalender/${selectedLesson.id}/update-note`);
-    };
-
     const handleSelectLesson = (lesson) => {
         setSelectedLesson(lesson);
         setData("lessonobjective", lesson.lesson_goal || "");
@@ -29,6 +24,7 @@ export default function CalendarDashboard({ auth, rijlessen }) {
         alert(
             `Lesdoelstelling voor les op ${selectedLesson.date} opgeslagen: ${data.lessonobjective}`,
         );
+        patch(`/dashboard/kalender/${selectedLesson.id}/update-note`);
     };
 
     const cancelLesson = () => {

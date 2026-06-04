@@ -31,7 +31,7 @@ class RijlesFactory extends Factory
             'lesson_funds' => $this->faker->sentence(),
             'instructor_name' => $this->faker->name(),
             'status' => fake()->randomElement(['planned', 'completed', 'cancelled']),
-            'note' => $this->faker->paragraph(),
+            'note' => '',
         ];
     }
 }
