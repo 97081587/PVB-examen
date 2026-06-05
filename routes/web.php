@@ -37,8 +37,3 @@ Route::get('/dashboard/kalender', [\App\Http\Controllers\KalenderController::cla
 Route::patch('/dashboard/kalender/{id}/update-note', [\App\Http\Controllers\KalenderController::class, 'updateNote'])
     ->middleware('auth')
     ->name('klant.updateNote');
-
-// Route voor het annuleren van een les
-Route::delete('/dashboard/kalender/{id}', [\App\Http\Controllers\KalenderController::class, 'destroy'])
-    ->middleware('auth')
-    ->name('klant.annuleerLes');
