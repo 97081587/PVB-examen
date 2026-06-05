@@ -54,6 +54,7 @@ class kalenderController extends Controller
         return back();
     }
     
+    // rijles annuleren
     public function updateStatus (Request $request, Rijles $rijles) {
         $request->validate([
             'status' => 'required|string',

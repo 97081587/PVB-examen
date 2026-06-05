@@ -19,22 +19,8 @@ class LessenSeeder extends Seeder
         Rijles::create([
             'user_id' => $userId,
             'date' => '2026-06-10',
-            'start_time' => '10:00:00',
-            'end_time' => '11:00:00',
-            'location' => 'Ophaaladres 123, Stad',
-            'lesson_goal' => 'Bochten en parkeren',
-            'exam_info' => 'Voorbereiding op praktijkexamen',
-            'lesson_funds' => 'Tegoed: 5 lessen',
-            'instructor_name' => 'Instructeur Jan',
-            'status' => 'planned',
-            'note' => '',
-        ]);
-
-        Rijles::create([
-            'user_id' => $userId,
-            'date' => '2026-06-15',
-            'start_time' => '10:00:00',
-            'end_time' => '11:00:00',
+            'start_time' => '10:00',
+            'end_time' => '11:00',
             'location' => 'Ophaaladres 123, Stad',
             'lesson_goal' => 'Bochten en parkeren',
             'exam_info' => 'Voorbereiding op praktijkexamen',
