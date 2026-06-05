@@ -54,13 +54,4 @@ class kalenderController extends Controller
         return back();
     }
 
-    // Functie voor annuleren
-    public function destroy(Rijles $rijles)
-    {
-        if ($rijles->user_id === Auth::id() && $rijles->status === 'gepland') {
-            $rijles->delete();
-        }
-
-        return back();
-    }
 }
