@@ -20,15 +20,7 @@ class RijlesFactory extends Factory
     
     public function definition(): array
     {
-        $userId = User::query()->where('role', 'klant')->value('id');
-
-        $date = fake()->dateTimeBetween('2026-06-01', '2026-06-30');
-        $startTime = fake()->dateTimeBetween('08:00', '17:00')->format('H:i');
-
-        $lessonDateTime = Carbon::parse(
-        $date->format('Y-m-d') . ' ' . $startTime
-        );
-        
+        $userId = User::query()->where('role', 'klant')->value('id');      
         
         return [
             'user_id' => $userId,
@@ -44,23 +36,33 @@ class RijlesFactory extends Factory
             'note' => '',
         ];
 
+        
+        $date = fake()->dateTimeBetween('2026-06-01', '2026-06-30');
+        $startTime = fake()->dateTimeBetween('08:00', '17:00')->format('H:i');
 
-        //checkt of de les in het verleden ligt, zo ja dan is het afgerond, anders geannuleerd
+        $lessonDateTime = Carbon::parse(
+        $date->format('Y-m-d') . ' ' . $startTime
+        );
+
+        //checkt of de les in het verleden ligt. Als dat zo is, markeert het als 'afgerond', anders krijgt het een willekeurige status.
         return [
             'date' => $date->format('Y-m-d'),
             'start_time' => $startTime,
             'status' => $lessonDateTime->isPast()
-                ? 'afgerond'
-                : 'gepland',
-        ];
-
-        //checkt of de les in de toekomst ligt, zo ja dan is het gepland, anders afgerond
-        return [
-            'date' => $date->format('Y-m-d'),
-            'start_time' => $startTime,
+            ? 'afgerond'
+            : fake()->randomElement([
+                'afgerond',
+                'afgerond',
+                'afgerond',
+                'geannuleerd',
+            ])
             'status' => $lessonDateTime->isFuture()
-                ? 'gepland'
-                : 'afgerond',
+            ? 'gepland',
         ];
+            return [
+                'status' => $status,
+            ];
+        
+
     }
 }
