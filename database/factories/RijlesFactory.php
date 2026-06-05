@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Rijles;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Carbon\Carbon;
 
 /**
  * @extends Factory<Rijles>
@@ -21,6 +22,14 @@ class RijlesFactory extends Factory
     {
         $userId = User::query()->where('role', 'klant')->value('id');
 
+        $date = fake()->dateTimeBetween('2026-06-01', '2026-06-30');
+        $startTime = fake()->dateTimeBetween('08:00', '17:00')->format('H:i');
+
+        $lessonDateTime = Carbon::parse(
+        $date->format('Y-m-d') . ' ' . $startTime
+        );
+        
+        
         return [
             'user_id' => $userId,
             'date' => $this->faker->dateTimeBetween('2026-06-01', '2026-06-30')->format('Y-m-d'),
@@ -33,6 +42,25 @@ class RijlesFactory extends Factory
             'instructor_name' => User::where('role', 'instructeur')->inRandomOrder()->first()->first_name . ' ' . User::where('role', 'instructeur')->inRandomOrder()->first()->last_name,
             'status' => fake()->randomElement(['gepland', 'afgerond', 'geannuleerd']),
             'note' => '',
+        ];
+
+
+        //checkt of de les in het verleden ligt, zo ja dan is het afgerond, anders geannuleerd
+        return [
+            'date' => $date->format('Y-m-d'),
+            'start_time' => $startTime,
+            'status' => $lessonDateTime->isPast()
+                ? 'afgerond'
+                : 'geannuleerd',
+        ];
+
+        //checkt of de les in de toekomst ligt, zo ja dan is het gepland, anders geannuleerd
+        return [
+            'date' => $date->format('Y-m-d'),
+            'start_time' => $startTime,
+            'status' => $lessonDateTime->isFuture()
+                ? 'gepland'
+                : 'geannuleerd',
         ];
     }
 }
