@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Rijles;
-use carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class kalenderController extends Controller
@@ -31,9 +30,27 @@ class kalenderController extends Controller
                 'gepland' => $rijlessen->where('status', 'gepland')->count(),
                 'afgerond' => $rijlessen->where('status', 'afgerond')->count(),
                 'geannuleerd' => $rijlessen->where('status', 'geannuleerd')->count(),
-                'date' => Carbon::parse($nextLesson->date)->translatedFormat('l j F'),
             ]
         ]);
+    }
+
+    // Functie voor het bijwerken van de locatie van een rijles
+    public function updateLocation(Request $request, $id)
+    {
+        $rijles = Rijles::find($id);
+        if ($rijles->user_id !== Auth::id()) {
+            return back()->with('error', 'Niet toegestaan');
+        }
+
+        $request->validate([
+            'location' => 'required|string|max:255',
+        ]);
+
+        $rijles->update([
+            'location' => $request->location
+        ]);
+
+        return back()->with('message', 'Locatie bijgewerkt');
     }
 
     // Functie voor het opslaan van de opmerking
