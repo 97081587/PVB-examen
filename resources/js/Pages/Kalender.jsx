@@ -37,7 +37,7 @@ export default function CalendarDashboard({ auth, rijlessen }) {
             router.patch(
                 `/dashboard/kalender/${selectedLesson.id}/update-status`,
                 {
-                    status: "CANCELLED",
+                    status: "geannuleerd",
                 },
                 {
                     onSuccess: () => {
@@ -246,7 +246,7 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                                             </td>
                                             <td className="px-6 py-4">
                                                 <span
-                                                    className={`px-3 py-1 rounded-full text-xs font-bold uppercase ${lesson.status === "gepland" ? "bg-emerald-100 text-emerald-800" : "bg-gray-100 text-gray-800"}`}
+                                                    className={`px-3 py-1 rounded-full text-xs font-bold uppercase ${lesson.status === "gepland" ? "bg-emerald-100 text-emerald-800" : lesson.status === "afgerond" ? "bg-blue-100 text-blue-800" : lesson.status === "geannuleerd" ? "bg-red-100 text-red-800" : "bg-gray-100 text-gray-800"}`}
                                                 >
                                                     {lesson.status}
                                                 </span>
@@ -272,7 +272,7 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                                     </p>
                                 </div>
                                 {selectedLesson.status?.toLowerCase() ===
-                                    "planned" && (
+                                    "gepland" && (
                                     <button
                                         onClick={cancelLesson}
                                         className="text-red-500 text-xs font-bold uppercase hover:underline"

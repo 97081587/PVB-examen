@@ -20,8 +20,8 @@ class klantDashboardController extends Controller
 
         // 2. Bereken de statistieken voor de tiles
         $stats = [
-            'planned' => $rijlessen->where('status', 'planned')->count(),
-            'completed' => $rijlessen->where('status', 'completed')->count(),
+            'gepland' => $rijlessen->where('status', 'gepland')->count(),
+            'afgerond' => $rijlessen->where('status', 'afgerond')->count(),
             'exam_date' => $user->exam_date ? Carbon::parse($user->exam_date)->format('d M Y') : 'Nog niet gepland',
         ];
 

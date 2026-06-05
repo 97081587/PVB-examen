@@ -26,7 +26,7 @@ class LessenSeeder extends Seeder
             'exam_info' => 'Voorbereiding op praktijkexamen',
             'lesson_funds' => 'Tegoed: 5 lessen',
             'instructor_name' => 'Instructeur Jan',
-            'status' => 'planned',
+            'status' => 'gepland',
             'note' => '',
         ]);
     }

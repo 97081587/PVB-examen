@@ -30,7 +30,7 @@ class RijlesFactory extends Factory
             'exam_info' => $this->faker->sentence(),
             'lesson_funds' => $this->faker->sentence(),
             'instructor_name' => $this->faker->name(),
-            'status' => fake()->randomElement(['planned', 'completed', 'cancelled']),
+            'status' => fake()->randomElement(['gepland', 'afgerond', 'geannuleerd']),
             'note' => '',
         ];
     }
