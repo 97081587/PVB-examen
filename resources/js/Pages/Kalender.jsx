@@ -34,7 +34,22 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                 `Weet je zeker dat je de les op ${selectedLesson.date} wilt annuleren?`,
             )
         ) {
-            alert(`Les op ${selectedLesson.date} geannuleerd.`);
+            router.patch(
+                `/dashboard/kalender/${selectedLesson.id}/update-status`,
+                {
+                    status: "CANCELLED",
+                },
+                {
+                    onSuccess: () => {
+                        alert(`Les op ${selectedLesson.date} geannuleerd.`);
+                    },
+                    onError: () => {
+                        alert(
+                            `Er is een fout opgetreden bij het annuleren van de les op ${selectedLesson.date}. Probeer het opnieuw.`,
+                        );
+                    },
+                },
+            );
         }
     };
 
@@ -133,8 +148,9 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                     <div className="flex items-center gap-4">
                         <div className="flex items-center gap-2">
                             <span
-                            onClick={() => setIsProfileModalOpen(true)}
-                            className="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center font-bold text-sm">
+                                onClick={() => setIsProfileModalOpen(true)}
+                                className="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center font-bold text-sm"
+                            >
                                 {auth?.user?.first_name[0]}
                                 {auth?.user?.last_name[0]}
                             </span>
@@ -173,8 +189,9 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                                 )}
                                 {[...Array(30)].map((_, i) => {
                                     const day = i + 1;
+                                    const dayToMatch = `2026-06-${day < 10 ? "0" + day : day}`;
                                     const lesson = lessons.find(
-                                        (l) => l.dayNum === day,
+                                        (l) => l.date === dayToMatch,
                                     );
                                     return (
                                         <div
@@ -185,7 +202,7 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                                             }
                                             className={`h-10 flex items-center justify-center rounded-lg text-sm font-bold cursor-pointer transition
                                             ${lesson ? "bg-emerald-50 text-emerald-600 border border-emerald-100 hover:bg-emerald-100" : "text-gray-400 hover:bg-gray-50"}
-                                            ${selectedLesson?.dayNum === day ? "ring-2 ring-emerald-500 ring-offset-2" : ""}
+                                            ${selectedLesson?.date === dayToMatch ? "ring-2 ring-emerald-500 ring-offset-2" : ""}
                                             ${day === 2 ? "bg-orange-500 text-white shadow-md" : ""}
                                         `}
                                         >
@@ -254,7 +271,8 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                                         {selectedLesson.start_time}
                                     </p>
                                 </div>
-                                {selectedLesson.status === "gepland" && (
+                                {selectedLesson.status?.toLowerCase() ===
+                                    "planned" && (
                                     <button
                                         onClick={cancelLesson}
                                         className="text-red-500 text-xs font-bold uppercase hover:underline"
