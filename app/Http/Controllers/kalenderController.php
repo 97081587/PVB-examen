@@ -53,14 +53,16 @@ class kalenderController extends Controller
 
         return back();
     }
+    
+    public function updateStatus (Request $request, Rijles $rijles) {
+        $request->validate([
+            'status' => 'required|string',
+        ]);
 
-    // Functie voor annuleren
-    public function destroy(Rijles $rijles)
-    {
-        if ($rijles->user_id === Auth::id() && $rijles->status === 'gepland') {
-            $rijles->delete();
-        }
+        $rijles->update([
+            'status' => $request->status
+        ]);
 
-        return back();
+        return back()->with('message', 'Status bijgewerkt');
     }
 }
