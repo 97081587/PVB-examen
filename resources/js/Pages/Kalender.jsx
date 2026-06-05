@@ -21,7 +21,7 @@ export default function CalendarDashboard({ auth, rijlessen }) {
 
     const handleSelectLesson = (lesson) => {
         setSelectedLesson(lesson);
-        setData("lessonobjective", lesson.lesson_goal || "");
+        setData("note", lesson.note || "");
         setTempLocation(lesson.location || "");
         setIsEditingLocation(false);
     };
@@ -31,7 +31,13 @@ export default function CalendarDashboard({ auth, rijlessen }) {
         alert(
             `Opmerking voor les op ${selectedLesson.date} opgeslagen: ${data.note}`,
         );
-        patch(`/dashboard/kalender/${selectedLesson.id}/update-note`);
+        patch(
+            `/dashboard/kalender/${selectedLesson.id}/update-note`,
+            setSelectedLesson({
+                ...selectedLesson,
+                note: data.note,
+            }),
+        );
     };
 
     const cancelLesson = () => {
@@ -66,7 +72,7 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                 location: tempLocation,
             },
             {
-                onSucces: () => {
+                onSuccess: () => {
                     setIsEditingLocation(false);
                     setSelectedLesson({
                         ...selectedLesson,
@@ -410,6 +416,16 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                                         </p>
                                         <p className="text-gray-600">
                                             {selectedLesson.lesson_goal}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-2xl text-sm">
+                                    <span className="text-lg">📝</span>
+                                    <div>
+                                        <p className="font-bold">Opmerking</p>
+                                        <p className="text-gray-600">
+                                            {selectedLesson.note ||
+                                                "Geen opmerking toegevoegd"}
                                         </p>
                                     </div>
                                 </div>
