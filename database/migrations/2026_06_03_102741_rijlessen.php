@@ -27,7 +27,7 @@ return new class extends Migration
             $table->text('note')->nullable(); // Voo opmerkingen
             $table->timestamps();
         });
-    }r
+    }
 
     /**
      * Reverse the migrations.
