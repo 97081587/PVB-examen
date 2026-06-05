@@ -10,7 +10,9 @@ export default function CalendarDashboard({ auth, rijlessen }) {
     const lessons = rijlessen || [];
     const [selectedLesson, setSelectedLesson] = useState(lessons[0] || {});
     const [isEditingLocation, setIsEditingLocation] = useState(false);
-    const [tempLocation, setTempLocation] = useState(selectedLesson.location || "");
+    const [tempLocation, setTempLocation] = useState(
+        selectedLesson.location || "",
+    );
 
     const { data, setData, patch, processing } = useForm({
         lessonobjective: selectedLesson?.lesson_goal || "",
@@ -59,17 +61,30 @@ export default function CalendarDashboard({ auth, rijlessen }) {
 
     const updateLocation = () => {
         router.patch(
-            `/dashboard/kalender/${selectedLesson.id}/update-location`,{
-            location: tempLocation
-        }, {
-            onSucces: () => {
-                setIsEditingLocation(false);
-                setSelectedLesson({...selectedLesson, location: tempLocation});
-                alert("Ophaaladres succesvol gewijzigd");
+            `/dashboard/kalender/${selectedLesson.id}/update-location`,
+            {
+                location: tempLocation,
             },
-            preserveScroll: true
-        });
-    }
+            {
+                onSucces: () => {
+                    setIsEditingLocation(false);
+                    setSelectedLesson({
+                        ...selectedLesson,
+                        location: tempLocation,
+                    });
+                    alert("Ophaaladres succesvol gewijzigd");
+                },
+                preserveScroll: true,
+            },
+        );
+    };
+
+    const today = new Date();
+    const currentDay = today.getDate();
+    const currentMonth = today.getMonth() + 1;
+    const currentYear = today.getFullYear();
+
+    const todayString = `${currentYear}-${String(currentMonth).padStart(2, "0")}-${String(currentDay).padStart(2, "0")}`;
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
@@ -207,10 +222,15 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                                 )}
                                 {[...Array(30)].map((_, i) => {
                                     const day = i + 1;
-                                    const dayToMatch = `2026-06-${day < 10 ? "0" + day : day}`;
+                                    const dayToMatch = `${currentYear}-${String(currentMonth).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+
                                     const lesson = lessons.find(
                                         (l) => l.date === dayToMatch,
                                     );
+
+                                    // Bepaal of deze specifieke dag 'vandaag' is
+                                    const isToday = dayToMatch === todayString;
+
                                     return (
                                         <div
                                             key={i}
@@ -219,10 +239,10 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                                                 handleSelectLesson(lesson)
                                             }
                                             className={`h-10 flex items-center justify-center rounded-lg text-sm font-bold cursor-pointer transition
-                                            ${lesson ? "bg-emerald-50 text-emerald-600 border border-emerald-100 hover:bg-emerald-100" : "text-gray-400 hover:bg-gray-50"}
-                                            ${selectedLesson?.date === dayToMatch ? "ring-2 ring-emerald-500 ring-offset-2" : ""}
-                                            ${day === 2 ? "bg-orange-500 text-white shadow-md" : ""}
-                                        `}
+            ${lesson ? "bg-emerald-50 text-emerald-600 border border-emerald-100 hover:bg-emerald-100" : "text-gray-400 hover:bg-gray-50"}
+            ${selectedLesson?.date === dayToMatch ? "ring-2 ring-emerald-500 ring-offset-2" : ""}
+            ${isToday ? "bg-orange-500 text-white shadow-md" : ""}
+        `}
                                         >
                                             {day}
                                         </div>
@@ -304,49 +324,65 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                                 <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl text-sm">
                                     <span className="text-lg">📍</span>
                                     <div className="flex-1">
-                                        <div className='flex justify-between items-center mb-1'>
-                                        <p className="font-bold">Ophaaladres</p>
-                                        {!isEditingLocation && (
-                                            <button
-                                                onClick={()=> setIsEditingLocation(true)}            
-                                                className="text-emerald-500 text-xs font-bold uppercase hover:underline"
-                                            >
-                                                Wijzig
-                                            </button>   
-                                        )}
-                                    </div>
+                                        <div className="flex justify-between items-center mb-1">
+                                            <p className="font-bold">
+                                                Ophaaladres
+                                            </p>
+                                            {!isEditingLocation && (
+                                                <button
+                                                    onClick={() =>
+                                                        setIsEditingLocation(
+                                                            true,
+                                                        )
+                                                    }
+                                                    className="text-emerald-500 text-xs font-bold uppercase hover:underline"
+                                                >
+                                                    Wijzig
+                                                </button>
+                                            )}
+                                        </div>
 
                                         {isEditingLocation ? (
                                             <div className="flex gap-1">
                                                 <input
                                                     type="text"
                                                     value={tempLocation}
-                                                    onChange={(e) => setTempLocation(e.target.value)}
+                                                    onChange={(e) =>
+                                                        setTempLocation(
+                                                            e.target.value,
+                                                        )
+                                                    }
                                                     className="w-full border-gray-300 rounded-lg text-sm focus:ring-emerald-500"
                                                     placeholder="Voer nieuw ophaaladres in"
                                                 />
                                                 <div className="flex gap-2">
-                                                    <button 
-                                                        onClick={() => setIsEditingLocation(false)}
+                                                    <button
+                                                        onClick={() =>
+                                                            setIsEditingLocation(
+                                                                false,
+                                                            )
+                                                        }
                                                         className="bg-gray-200 text-gray-600 px-3 py-1 rounded-md text-xs font-bold"
                                                     >
                                                         Annuleren
-                                                        </button>
-                                                        </div>
+                                                    </button>
+                                                </div>
                                             </div>
                                         ) : (
                                             <p className="text-gray-600">
-                                                {selectedLesson.location || "Geen ophaaladres opgegeven"}
+                                                {selectedLesson.location ||
+                                                    "Geen ophaaladres opgegeven"}
                                             </p>
                                         )}
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl text-sm">
-                                    <span className='text-lg'>⏰</span>
+                                    <span className="text-lg">⏰</span>
                                     <div>
                                         <p className="font-bold">Tijdstip</p>
                                         <p className="text-gray-600">
-                                            {selectedLesson.start_time} - {selectedLesson.end_time}
+                                            {selectedLesson.start_time} -{" "}
+                                            {selectedLesson.end_time}
                                         </p>
                                     </div>
                                 </div>
