@@ -33,7 +33,7 @@ class klantDashboardController extends Controller
                 'user' => $user,
             ],
             'stats' => $stats,
-            'lessons' => $rijlessen,
+            'rijlessen' => $rijlessen,
             'nextLesson' => $nextLesson ? [
                 'date' => Carbon::parse($nextLesson->date)->translatedFormat('l j F'),
                 // 'time' => Carbon::parse($nextLesson->start_time)->format('H:i'),

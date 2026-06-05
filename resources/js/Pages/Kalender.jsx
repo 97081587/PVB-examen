@@ -164,7 +164,7 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                         <span className="mr-3">📊</span> Dashboard
                     </a>
                     <a
-                        href="/kalender"
+                        href="/dashboard/kalender"
                         className="flex items-center p-3 bg-gray-800 rounded-lg text-emerald-400"
                     >
                         <span className="mr-3">📅</span> Kalender
@@ -268,6 +268,7 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                                     {lessons.map((lesson) => (
                                         <tr
                                             key={lesson.id}
+                                            id={`lesson-row-${lesson.id}`}
                                             onClick={() =>
                                                 handleSelectLesson(lesson)
                                             }
@@ -356,6 +357,12 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                                                     placeholder="Voer nieuw ophaaladres in"
                                                 />
                                                 <div className="flex gap-2">
+                                                    <button
+                                                        onClick={updateLocation}
+                                                        className="bg-emerald-500 text-white px-3 py-1 rounded-md text-xs font-bold hover:bg-emerald-600 transition"
+                                                    >
+                                                        Wijzigen
+                                                    </button>
                                                     <button
                                                         onClick={() =>
                                                             setIsEditingLocation(
