@@ -51,16 +51,16 @@ class RijlesFactory extends Factory
             'start_time' => $startTime,
             'status' => $lessonDateTime->isPast()
                 ? 'afgerond'
-                : 'geannuleerd',
+                : 'gepland',
         ];
 
-        //checkt of de les in de toekomst ligt, zo ja dan is het gepland, anders geannuleerd
+        //checkt of de les in de toekomst ligt, zo ja dan is het gepland, anders afgerond
         return [
             'date' => $date->format('Y-m-d'),
             'start_time' => $startTime,
             'status' => $lessonDateTime->isFuture()
                 ? 'gepland'
-                : 'geannuleerd',
+                : 'afgerond',
         ];
     }
 }
