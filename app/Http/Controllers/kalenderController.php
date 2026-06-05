@@ -53,5 +53,16 @@ class kalenderController extends Controller
 
         return back();
     }
+    
+    public function updateStatus (Request $request, Rijles $rijles) {
+        $request->validate([
+            'status' => 'required|string',
+        ]);
 
+        $rijles->update([
+            'status' => $request->status
+        ]);
+
+        return back()->with('message', 'Status bijgewerkt');
+    }
 }
