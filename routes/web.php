@@ -38,4 +38,6 @@ Route::patch('/dashboard/kalender/{id}/update-note', [\App\Http\Controllers\Kale
     ->middleware('auth')
     ->name('klant.updateNote');
 
-    
+Route::patch('/dashboard/kalender/{rijles}/update-status', [\App\Http\Controllers\KalenderController::class, 'updateStatus'])
+    ->middleware('auth')
+    ->name('klant.updateStatus');
