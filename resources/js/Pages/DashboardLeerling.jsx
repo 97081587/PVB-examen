@@ -10,7 +10,11 @@ export default function Dashboard({ auth, rijlessen, stats }) {
     const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
     const geplandeLessen =
-        rijlessen?.filter((les) => les.status === "gepland") || [];
+        rijlessen?.filter(
+            (les) =>
+                les.status?.toLowerCase() === "planned" ||
+                les.status?.toLowerCase() === "gepland",
+        ) || [];
 
     return (
         <div className="min-h-screen bg-gray-100 flex flex-col md:flex-row">
@@ -42,7 +46,6 @@ export default function Dashboard({ auth, rijlessen, stats }) {
                                         {auth?.user?.last_name}
                                     </p>
                                 </div>
-                                
                             </div>
 
                             <div className="space-y-3">
@@ -206,10 +209,11 @@ export default function Dashboard({ auth, rijlessen, stats }) {
                                         geplandeLessen.map((les) => (
                                             <TableRow
                                                 key={les.id}
-                                                date={les.date} // Zorg dat de naam 'datum' klopt met DB
-                                                time={les.start_time} // Zorg dat de naam 'tijd' klopt met DB
-                                                address={les.location} // Zorg dat de naam 'locatie' klopt met DB
-                                                instructor={les.instructor_naam}
+                                                id={les.id}
+                                                date={les.date}
+                                                time={les.start_time}
+                                                address={les.location}
+                                                instructor={les.instructor_name}
                                             />
                                         ))
                                     ) : (
@@ -250,7 +254,7 @@ function StatCard({ icon, title, value }) {
     );
 }
 
-function TableRow({ date, time, address, instructor }) {
+function TableRow({ id, date, time, address, instructor }) {
     return (
         <tr className="hover:bg-gray-50 transition">
             <td className="px-4 md:px-6 py-4 font-bold text-sm md:text-base">
@@ -266,7 +270,15 @@ function TableRow({ date, time, address, instructor }) {
                 {instructor}
             </td>
             <td className="px-4 md:px-6 py-4">
-                <button className="text-gray-300 text-xs italic border px-2 py-1 rounded">
+                <button
+                    type="button"
+                    onClick={() =>
+                        router.visit(
+                            `/dashboard/kalender?selectedLesson=${id}`,
+                        )
+                    }
+                    className="text-gray-300 text-xs italic border px-2 py-1 rounded hover:bg-orange-500 transition"
+                >
                     Wijzigen
                 </button>
             </td>

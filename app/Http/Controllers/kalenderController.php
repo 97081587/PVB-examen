@@ -31,7 +31,6 @@ class kalenderController extends Controller
                 'gepland' => $rijlessen->where('status', 'gepland')->count(),
                 'afgerond' => $rijlessen->where('status', 'afgerond')->count(),
                 'geannuleerd' => $rijlessen->where('status', 'geannuleerd')->count(),
-                'date' => Carbon::parse($nextLesson->date)->translatedFormat('l j F'),
             ]
         ]);
     }
