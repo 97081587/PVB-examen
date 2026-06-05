@@ -34,6 +34,25 @@ class kalenderController extends Controller
         ]);
     }
 
+    // Functie voor het bijwerken van de locatie van een rijles
+    public function updateLocation(Request $request, $id)
+    {
+        $rijles = Rijles::find($id);
+        if ($rijles->user_id !== Auth::id()) {
+            return back()->with('error', 'Niet toegestaan');
+        }
+
+        $request->validate([
+            'location' => 'required|string|max:255',
+        ]);
+
+        $rijles->update([
+            'location' => $request->location
+        ]);
+
+        return back()->with('message', 'Locatie bijgewerkt');
+    }
+
     // Functie voor het opslaan van de opmerking
     public function updateNote(Request $request, $id)
     {

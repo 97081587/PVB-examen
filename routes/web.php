@@ -41,3 +41,8 @@ Route::patch('/dashboard/kalender/{id}/update-note', [\App\Http\Controllers\Kale
 Route::patch('/dashboard/kalender/{rijles}/update-status', [\App\Http\Controllers\KalenderController::class, 'updateStatus'])
     ->middleware('auth')
     ->name('klant.updateStatus');
+
+// Route voor het opslaan van de gewijzigde locatie
+Route::patch('/dashboard/kalender/{id}/update-location', [\App\Http\Controllers\KalenderController::class, 'updateLocation'])
+    ->middleware('auth')
+    ->name('klant.updateLocation');
