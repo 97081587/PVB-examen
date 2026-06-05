@@ -8,7 +8,9 @@ const logout = () => {
 export default function CalendarDashboard({ auth, rijlessen }) {
     const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
     const lessons = rijlessen || [];
-    const [selectedLesson, setSelectedLesson] = useState(lessons[0] || "1970-01-01");
+    const [selectedLesson, setSelectedLesson] = useState(lessons[0] || {});
+    const [isEditingLocation, setIsEditingLocation] = useState(false);
+    const [tempLocation, setTempLocation] = useState(selectedLesson.location || "");
 
     const { data, setData, patch, processing } = useForm({
         lessonobjective: selectedLesson?.lesson_goal || "",
@@ -18,6 +20,8 @@ export default function CalendarDashboard({ auth, rijlessen }) {
     const handleSelectLesson = (lesson) => {
         setSelectedLesson(lesson);
         setData("lessonobjective", lesson.lesson_goal || "");
+        setTempLocation(lesson.location || "");
+        setIsEditingLocation(false);
     };
 
     const saveNote = (e) => {
@@ -52,6 +56,20 @@ export default function CalendarDashboard({ auth, rijlessen }) {
             );
         }
     };
+
+    const updateLocation = () => {
+        router.patch(
+            `/dashboard/kalender/${selectedLesson.id}/update-location`,{
+            location: tempLocation
+        }, {
+            onSucces: () => {
+                setIsEditingLocation(false);
+                setSelectedLesson({...selectedLesson, location: tempLocation});
+                alert("Ophaaladres succesvol gewijzigd");
+            },
+            preserveScroll: true
+        });
+    }
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
@@ -285,10 +303,50 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                             <div className="grid grid-cols-1 gap-4 mt-6 mb-8">
                                 <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl text-sm">
                                     <span className="text-lg">📍</span>
-                                    <div>
+                                    <div className="flex-1">
+                                        <div className='flex justify-between items-center mb-1'>
                                         <p className="font-bold">Ophaaladres</p>
+                                        {!isEditingLocation && (
+                                            <button
+                                                onClick={()=> setIsEditingLocation(true)}            
+                                                className="text-emerald-500 text-xs font-bold uppercase hover:underline"
+                                            >
+                                                Wijzig
+                                            </button>   
+                                        )}
+                                    </div>
+
+                                        {isEditingLocation ? (
+                                            <div className="flex gap-1">
+                                                <input
+                                                    type="text"
+                                                    value={tempLocation}
+                                                    onChange={(e) => setTempLocation(e.target.value)}
+                                                    className="w-full border-gray-300 rounded-lg text-sm focus:ring-emerald-500"
+                                                    placeholder="Voer nieuw ophaaladres in"
+                                                />
+                                                <div className="flex gap-2">
+                                                    <button 
+                                                        onClick={() => setIsEditingLocation(false)}
+                                                        className="bg-gray-200 text-gray-600 px-3 py-1 rounded-md text-xs font-bold"
+                                                    >
+                                                        Annuleren
+                                                        </button>
+                                                        </div>
+                                            </div>
+                                        ) : (
+                                            <p className="text-gray-600">
+                                                {selectedLesson.location || "Geen ophaaladres opgegeven"}
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-2xl text-sm">
+                                    <span className='text-lg'>⏰</span>
+                                    <div>
+                                        <p className="font-bold">Tijdstip</p>
                                         <p className="text-gray-600">
-                                            {selectedLesson.location}
+                                            {selectedLesson.start_time} - {selectedLesson.end_time}
                                         </p>
                                     </div>
                                 </div>
