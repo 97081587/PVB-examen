@@ -37,3 +37,7 @@ Route::get('/dashboard/kalender', [\App\Http\Controllers\KalenderController::cla
 Route::patch('/dashboard/kalender/{id}/update-note', [\App\Http\Controllers\KalenderController::class, 'updateNote'])
     ->middleware('auth')
     ->name('klant.updateNote');
+
+Route::patch('/dashboard/kalender/{rijles}/update-status', [\App\Http\Controllers\KalenderController::class, 'updateStatus'])
+    ->middleware('auth')
+    ->name('klant.updateStatus');

@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MensenSeeder::class);
         $this->call(LessenSeeder::class);
         
-        Rijles::factory()->count(15)->create();
+        Rijles::factory()->count(6)->create();
 
         // User::factory()->create([
         //     'first_name' => 'Test',

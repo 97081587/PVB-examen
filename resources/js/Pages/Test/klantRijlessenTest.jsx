@@ -109,9 +109,9 @@ export default function Rijlessen() {
                     onChange={(e) => setData('status', e.target.value)}
                     className="border border-gray-300 rounded px-2 py-1"
                 >
-                    <option value="planned">Gepland</option>
-                    <option value="completed">Voltooid</option>
-                    <option value="cancelled">Geannuleerd</option>
+                    <option value="gepland">Gepland</option>
+                    <option value="afgerond">Afgerond</option>
+                    <option value="geannuleerd">Geannuleerd</option>
                 </select>
 
                 <label htmlFor="note">Opmerkingen:</label>
