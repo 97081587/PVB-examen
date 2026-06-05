@@ -8,7 +8,7 @@ const logout = () => {
 export default function CalendarDashboard({ auth, rijlessen }) {
     const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
     const lessons = rijlessen || [];
-    const [selectedLesson, setSelectedLesson] = useState(lessons[0] || null);
+    const [selectedLesson, setSelectedLesson] = useState(lessons[0] || "1970-01-01");
 
     const { data, setData, patch, processing } = useForm({
         lessonobjective: selectedLesson?.lesson_goal || "",

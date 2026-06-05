@@ -146,7 +146,7 @@ export default function Dashboard({ auth, rijlessen, stats }) {
                     <span>📅</span>
                     <span>
                         Welkom terug, {auth?.user?.first_name} — je volgende les
-                        is <strong>do 4 juni om 10:00</strong>
+                        is <strong>{auth?.user?.nextLesson}</strong>
                     </span>
                 </div>
 
