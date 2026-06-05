@@ -37,8 +37,8 @@ class MensenSeeder extends Seeder
 
         // Instructeur 1
         User::create([
-            'first_name' => 'InstructeurNaam',
-            'last_name' => '1',
+            'first_name' => '1ste Instructeur John',
+            'last_name' => 'Doe 1',
             'email' => 'instructeur1@test.nl',
             'password' => Hash::make('12345678'),
             'adress' => 'Instructeurstraat 1',
@@ -48,8 +48,8 @@ class MensenSeeder extends Seeder
 
         // Instructeur 2
         User::create([
-            'first_name' => 'InstructeurNaam2',
-            'last_name' => '2',
+            'first_name' => '2de Instructeur John',
+            'last_name' => 'Doe 2',
             'email' => 'instructeur2@test.nl',
             'password' => Hash::make('12345678'),
             'adress' => 'Instructeurstraat 2',
@@ -59,8 +59,8 @@ class MensenSeeder extends Seeder
 
         // Instructeur 3
         User::create([
-            'first_name' => 'InstructeurNaam3',
-            'last_name' => '3',
+            'first_name' => '3de Instructeur John',
+            'last_name' => 'Doe 3',
             'email' => 'instructeur3@test.nl',
             'password' => Hash::make('12345678'),
             'adress' => 'Instructeurstraat 3',

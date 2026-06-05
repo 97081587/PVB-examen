@@ -30,7 +30,7 @@ class RijlesFactory extends Factory
             'lesson_goal' => $this->faker->sentence(),
             'exam_info' => $this->faker->sentence(),
             'lesson_funds' => $this->faker->sentence(),
-            'instructor_name' => User::where('role', 'instructeur')->inRandomOrder()->first()->first_name,
+            'instructor_name' => User::where('role', 'instructeur')->inRandomOrder()->first()->first_name . ' ' . User::where('role', 'instructeur')->inRandomOrder()->first()->last_name,
             'status' => fake()->randomElement(['gepland', 'afgerond', 'geannuleerd']),
             'note' => '',
         ];
