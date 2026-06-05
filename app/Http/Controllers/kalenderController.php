@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Rijles;
-use carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class kalenderController extends Controller
@@ -31,7 +30,6 @@ class kalenderController extends Controller
                 'gepland' => $rijlessen->where('status', 'gepland')->count(),
                 'afgerond' => $rijlessen->where('status', 'afgerond')->count(),
                 'geannuleerd' => $rijlessen->where('status', 'geannuleerd')->count(),
-                'date' => Carbon::parse($nextLesson->date)->translatedFormat('l j F'),
             ]
         ]);
     }
