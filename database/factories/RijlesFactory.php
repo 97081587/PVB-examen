@@ -69,7 +69,7 @@ class RijlesFactory extends Factory
                 'location' => fake('nl_NL')->address(),
                 'lesson_goal' => $this->faker->randomElement($LessonGoals),
                 'exam_info' => $this->faker->sentence(),
-                'lesson_funds' => $this->faker->sentence(),
+                'cancel_reason' => '',
                 'instructor_name' => $instructor->first_name . ' ' . $instructor->last_name,
                 'status' => $status,
                 'note' => '',

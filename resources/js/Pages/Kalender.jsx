@@ -100,7 +100,7 @@ export default function CalendarDashboard({ auth, rijlessen }) {
 
     const handleCancelSubmit = (e) => {
         e.preventDefault();
-        post(`/rijlessen/${selectedLesson.id}/annuleren`, {
+        post(`/dashboard/kalender`, {
             onSuccess: () => {
                 setShowCancelModal(false);
                 reset();
@@ -361,10 +361,10 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                                                     className="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-orange-500 focus:border-orange-500"
                                                     rows="3"
                                                     placeholder="Typ hier je reden..."
-                                                    value={data.reason}
+                                                    value={data.cancel_reason}
                                                     onChange={(e) =>
                                                         setData(
-                                                            "reason",
+                                                            "cancel_reason",
                                                             e.target.value,
                                                         )
                                                     }

@@ -24,7 +24,7 @@ class LessenSeeder extends Seeder
             'location' => 'Ophaaladres 123, Stad',
             'lesson_goal' => 'Bochten en parkeren',
             'exam_info' => 'Voorbereiding op praktijkexamen',
-            'lesson_funds' => 'Tegoed: 5 lessen',
+            'cancel_reason' => '',
             'instructor_name' => 'Instructeur Jan',
             'status' => 'gepland',
             'note' => '',

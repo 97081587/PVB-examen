@@ -74,17 +74,18 @@ class kalenderController extends Controller
         return back();
     }
     
-    // rijles annuleren
+    // rijles annuleren met reden
     public function updateStatus (Request $request, Rijles $rijles) {
-        $request->validate([
-            'status' => 'required|in:gepland,afgerond,geannuleerd',
-            'reden' => 'required_if:status,geannuleerd|string|nullable|max:500',
-        ]);
-
         $rijles->update([
-            'status' => $request->status,
-            'reden' => $request->reden,
+            'status' => 'required|in:gepland,afgerond,geannuleerd',
+            'cancel_reason' => 'required_if:status,geannuleerd|string|max:500',
         ]);
+        // dd($request->all());
+
+        // $rijles->update([
+        //     'status' => $request->status,
+        //     'cancel_reason' => $request->cancel_reason,
+        // ]);
 
         return back()->with('message', 'Status bijgewerkt');
     }

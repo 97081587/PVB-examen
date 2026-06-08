@@ -34,6 +34,11 @@ Route::get('/dashboard/kalender', [\App\Http\Controllers\KalenderController::cla
     ->middleware('auth')
     ->name('klant.rijlessen');
 
+// Route voor het annuleren van een rijles
+Route::post('/dashboard/kalender', [\App\Http\Controllers\KalenderController::class, 'updateStatus'])
+    ->middleware('auth')
+    ->name('klant.annuleren');
+
 // Route voor het opslaan van de opmerking
 Route::patch('/dashboard/kalender/{id}/update-note', [\App\Http\Controllers\KalenderController::class, 'updateNote'])
     ->middleware('auth')
@@ -48,4 +53,4 @@ Route::patch('/dashboard/kalender/{id}/update-location', [\App\Http\Controllers\
     ->middleware('auth')
     ->name('klant.updateLocation');
 
-Route::post('/dashboard/kalender/{}/annuleren', [kalenderController::class, 'annuleren']);  
+  
