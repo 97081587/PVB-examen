@@ -155,7 +155,7 @@ export default function Dashboard({ auth, rijlessen, stats }) {
                 {/* Welkomstbalk - Tekst wordt kleiner op mobiel */}
                 <div className="bg-[#10b981] text-white p-3 px-4 md:px-6 flex items-start md:items-center gap-2 text-sm md:text-base">
                     <span>📅</span>
-                    <span>Welkom terug, {auth?.user?.first_name}</span>
+                    <span>Welkom terug, {auth?.user?.first_name} {auth?.user?.last_name}!</span>
                 </div>
 
                 <div className="p-4 md:p-8 space-y-6 md:space-y-8">
