@@ -46,13 +46,25 @@ class RijlesFactory extends Factory
                     'geannuleerd',
                 ]);
 
+            $LessonGoals = [
+                'Bochten en parkeren',
+                'Snelweg rijden',
+                'Stadsverkeer',
+                'Rondje om de kerk',
+                'Voorbereiding op praktijkexamen',
+                'Keren en achteruitrijden',
+                'Beheer van de voertuigbediening',
+                'Verkeersinzicht en -gedrag',
+                'Rijvaardigheid en zelfvertrouwen',
+            ];
+
             return [
                 'user_id' => $userId,
                 'date' => $date->format('Y-m-d'),
                 'start_time' => $startTime,
                 'end_time' => $this->faker->time('H:i'),
                 'location' => fake('nl_NL')->address(),
-                'lesson_goal' => $this->faker->sentence(),
+                'lesson_goal' => $this->faker->randomElement($LessonGoals),
                 'exam_info' => $this->faker->sentence(),
                 'lesson_funds' => $this->faker->sentence(),
                 'instructor_name' => $instructor->first_name . ' ' . $instructor->last_name,
