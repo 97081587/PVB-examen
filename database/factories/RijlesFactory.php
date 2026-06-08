@@ -38,7 +38,7 @@ class RijlesFactory extends Factory
 
         
         $date = fake()->dateTimeBetween('2026-06-01', '2026-06-30');
-        $startTime = fake()->dateTimeBetween('08:00', '17:00')->format('H:i');
+        $startTime = fake()->time('H:i');
 
         $lessonDateTime = Carbon::parse(
         $date->format('Y-m-d') . ' ' . $startTime
@@ -49,20 +49,8 @@ class RijlesFactory extends Factory
             'date' => $date->format('Y-m-d'),
             'start_time' => $startTime,
             'status' => $lessonDateTime->isPast()
-            ? 'afgerond'
-            : fake()->randomElement([
-                'afgerond',
-                'afgerond',
-                'afgerond',
-                'geannuleerd',
-            ])
-            'status' => $lessonDateTime->isFuture()
-            ? 'gepland',
+                ? 'afgerond'
+                : 'gepland',
         ];
-            return [
-                'status' => $status,
-            ];
-        
-
     }
 }
