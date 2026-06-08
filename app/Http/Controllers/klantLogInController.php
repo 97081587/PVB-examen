@@ -25,12 +25,10 @@ class klantLogInController extends Controller
 
         // Logica voor het inloggen van de gebruiker
         $user = User::where('email', $validatedData['email'])->first();
-        if (!$user) {
-            return redirect()->back()->with('error', 'Ongeldige inloggegevens');
-        }
-
-        if (!Hash::check($validatedData['password'], $user->password)) {
-            return redirect()->back()->with('error', 'Ongeldige inloggegevens');
+        if (!$user || !Hash::check($validatedData['password'], $user->password)) {
+            return back()->withErrors([
+                'email' => 'De opgegeven inloggegevens zijn onjuist.',
+            ])->onlyInput('email'); 
         }
 
         Auth::login($user);

@@ -2,6 +2,7 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Home;
+use App\Http\Controllers\kalenderController;
 
 //landingspagina
 Route::get('/', [Home::class, 'index'])->name('home');
@@ -46,3 +47,5 @@ Route::patch('/dashboard/kalender/{rijles}/update-status', [\App\Http\Controller
 Route::patch('/dashboard/kalender/{id}/update-location', [\App\Http\Controllers\KalenderController::class, 'updateLocation'])
     ->middleware('auth')
     ->name('klant.updateLocation');
+
+Route::post('/dashboard/kalender/{}/annuleren', [kalenderController::class, 'annuleren']);  
