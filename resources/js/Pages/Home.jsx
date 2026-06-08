@@ -51,7 +51,7 @@ export default function Home({ auth }) {
                         rijschool van Overijssel.
                     </p>
                     <Link
-                        href="/inschrijven"
+                        href="/klantregistratie"
                         className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-full font-bold text-lg transition-all shadow-xl"
                     >
                         Schrijf je nu in!
