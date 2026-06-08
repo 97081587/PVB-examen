@@ -278,7 +278,7 @@ function TableRow({ id, date, time, address, instructor }) {
                     }
                     className="text-gray-300 text-xs italic border px-2 py-1 rounded hover:bg-orange-500 transition"
                 >
-                    Wijzigen
+                    Bekijken
                 </button>
             </td>
         </tr>
