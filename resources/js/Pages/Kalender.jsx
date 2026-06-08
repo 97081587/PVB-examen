@@ -44,31 +44,6 @@ export default function CalendarDashboard({ auth, rijlessen }) {
         );
     };
 
-    // const cancelLesson = () => {
-    //     if (
-    //         confirm(
-    //             `Weet je zeker dat je de les op ${selectedLesson.date} wilt annuleren?`,
-    //         )
-    //     ) {
-    //         router.patch(
-    //             `/dashboard/kalender/${selectedLesson.id}/update-status`,
-    //             {
-    //                 status: "geannuleerd",
-    //             },
-    //             {
-    //                 onSuccess: () => {
-    //                     alert(`Les op ${selectedLesson.date} geannuleerd.`);
-    //                 },
-    //                 onError: () => {
-    //                     alert(
-    //                         `Er is een fout opgetreden bij het annuleren van de les op ${selectedLesson.date}. Probeer het opnieuw.`,
-    //                     );
-    //                 },
-    //             },
-    //         );
-    //     }
-    // };
-
     const updateLocation = () => {
         router.patch(
             `/dashboard/kalender/${selectedLesson.id}/update-location`,
@@ -462,7 +437,18 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                                                 <div className="flex gap-2">
                                                     <button
                                                         onClick={updateLocation}
-                                                        className="bg-emerald-500 text-white px-3 py-1 rounded-md text-xs font-bold hover:bg-emerald-600 transition"
+                                                        disabled={
+                                                            !tempLocation.trim() ||
+                                                            tempLocation ===
+                                                                selectedLesson.location
+                                                        }
+                                                        className={`px-3 py-1 rounded-md text-xs font-bold transition ${
+                                                            !tempLocation.trim() ||
+                                                            tempLocation ===
+                                                                selectedLesson.location
+                                                                ? "bg-gray-300 cursor-not-allowed text-gray-500" // Styling als uitgeschakeld
+                                                                : "bg-emerald-500 text-white hover:bg-emerald-600" // Styling als actief
+                                                        }`}
                                                     >
                                                         Wijzigen
                                                     </button>
