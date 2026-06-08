@@ -35,18 +35,19 @@ Route::get('/dashboard/kalender', [\App\Http\Controllers\KalenderController::cla
     ->name('klant.rijlessen');
 
 // Route voor het annuleren van een rijles
-Route::post('/dashboard/kalender', [\App\Http\Controllers\KalenderController::class, 'updateStatus'])
-    ->middleware('auth')
-    ->name('klant.annuleren');
-
-// Route voor het opslaan van de opmerking
-Route::patch('/dashboard/kalender/{id}/update-note', [\App\Http\Controllers\KalenderController::class, 'updateNote'])
-    ->middleware('auth')
-    ->name('klant.updateNote');
-
-Route::patch('/dashboard/kalender/{rijles}/update-status', [\App\Http\Controllers\KalenderController::class, 'updateStatus'])
+Route::patch('/dashboard/kalender/{id}/cancel', [\App\Http\Controllers\KalenderController::class, 'updateStatus'])
     ->middleware('auth')
     ->name('klant.updateStatus');
+
+    // Route voor het bijwerken van de status van een rijles (gepland, afgerond, geannuleerd)
+// Route::patch('/dashboard/kalender/{rijles}/update-status', [\App\Http\Controllers\KalenderController::class, 'updateStatus'])
+//     ->middleware('auth')
+//     ->name('klant.updateStatus');
+
+// Route voor het opslaan van de opmerking
+Route::patch('/dashboard/kalender/{rijles}/{id}/update-note', [\App\Http\Controllers\KalenderController::class, 'updateNote'])
+    ->middleware('auth')
+    ->name('klant.updateNote');
 
 // Route voor het opslaan van de gewijzigde locatie
 Route::patch('/dashboard/kalender/{id}/update-location', [\App\Http\Controllers\KalenderController::class, 'updateLocation'])

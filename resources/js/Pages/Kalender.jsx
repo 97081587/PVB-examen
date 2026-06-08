@@ -15,10 +15,11 @@ export default function CalendarDashboard({ auth, rijlessen }) {
         selectedLesson.location || "",
     );
 
-    const { data, setData, patch, post, processing, reset } = useForm({
+    const { data, setData, patch, processing, reset } = useForm({
         lessonobjective: selectedLesson?.lesson_goal || "",
         note: selectedLesson?.note || "",
-        reason: "",
+        status: '',
+        cancel_reason: '',
     });
 
     const handleSelectLesson = (lesson) => {
@@ -98,15 +99,19 @@ export default function CalendarDashboard({ auth, rijlessen }) {
         setShowCancelModal(true);
     };
 
+
     const handleCancelSubmit = (e) => {
-        e.preventDefault();
-        post(`/dashboard/kalender`, {
-            onSuccess: () => {
-                setShowCancelModal(false);
-                reset();
-            },
-        });
-    };
+    e.preventDefault();
+
+    setData('status', 'geannuleerd');
+
+    patch(`/dashboard/kalender/${selectedLesson.id}/cancel`, {
+        onSuccess: () => {
+            setShowCancelModal(false);
+            reset();
+        },
+    });
+};
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
