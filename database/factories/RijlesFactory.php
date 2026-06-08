@@ -36,6 +36,7 @@ class RijlesFactory extends Factory
                 $date->format('Y-m-d') . ' ' . $startTime
             );
 
+            // Bepaal de status op basis van de datum en tijd van de les
             $status = $lessonDateTime->isPast()
                 ? 'afgerond'
                 : fake()->randomElement([
