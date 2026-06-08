@@ -20,12 +20,15 @@ class RijlesFactory extends Factory
     
     public function definition(): array
         {
-            //kiest een willekeurige instructeur voor de rijles
+            // Haal eerste klant op
+            $userId = User::where('role', 'klant')
+                ->value('id');
+
             $instructor = User::where('role', 'instructeur')
                 ->inRandomOrder()
                 ->first();
 
-            // datums en tijden genereren voor de rijles
+            // Genereer een datum en tijd voor de les
             $date = $this->faker->dateTimeBetween('2026-06-01', '2026-06-30');
             // $startTime = $this->faker->time('H:i');
             $startNumber = $this->faker->numberBetween(8, 19);

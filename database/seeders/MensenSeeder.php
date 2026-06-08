@@ -27,7 +27,7 @@ class MensenSeeder extends Seeder
         // Eigenaar
         User::create([
             'first_name' => 'Eigenaar',
-            'last_name' => 'Eigenaar',
+            'last_name' => 'Easy Drive 4 All',
             'email' => 'eigenaar@test.nl',
             'password' => Hash::make('12345678'),
             'adress' => 'Eigenaarstraat 1',
