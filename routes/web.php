@@ -45,7 +45,7 @@ Route::patch('/dashboard/kalender/{id}/cancel', [\App\Http\Controllers\KalenderC
 //     ->name('klant.updateStatus');
 
 // Route voor het opslaan van de opmerking
-Route::patch('/dashboard/kalender/{rijles}/{id}/update-note', [\App\Http\Controllers\KalenderController::class, 'updateNote'])
+Route::patch('/dashboard/kalender/{id}/update-note', [\App\Http\Controllers\KalenderController::class, 'updateNote'])
     ->middleware('auth')
     ->name('klant.updateNote');
 
