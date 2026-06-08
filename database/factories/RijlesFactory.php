@@ -30,7 +30,7 @@ class RijlesFactory extends Factory
 
             $date = $this->faker->dateTimeBetween('2026-06-01', '2026-06-30');
             // $startTime = $this->faker->time('H:i');
-            $startNumber = $this->faker->numberBetween(8, 17);
+            $startNumber = $this->faker->numberBetween(8, 19);
             $startTime = $startNumber . ':00';
             $endTime = ($startNumber + 1) . ':00';
 
