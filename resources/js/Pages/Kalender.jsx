@@ -14,12 +14,13 @@ export default function CalendarDashboard({ auth, rijlessen }) {
     const [tempLocation, setTempLocation] = useState(
         selectedLesson.location || "",
     );
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const { data, setData, patch, processing, reset } = useForm({
         lessonobjective: selectedLesson?.lesson_goal || "",
         note: selectedLesson?.note || "",
-        status: '',
-        cancel_reason: '',
+        status: "",
+        cancel_reason: "",
     });
 
     const handleSelectLesson = (lesson) => {
@@ -99,19 +100,18 @@ export default function CalendarDashboard({ auth, rijlessen }) {
         setShowCancelModal(true);
     };
 
-
     const handleCancelSubmit = (e) => {
-    e.preventDefault();
+        e.preventDefault();
 
-    setData('status', 'geannuleerd');
+        setData("status", "geannuleerd");
 
-    patch(`/dashboard/kalender/${selectedLesson.id}/cancel`, {
-        onSuccess: () => {
-            setShowCancelModal(false);
-            reset();
-        },
-    });
-};
+        patch(`/dashboard/kalender/${selectedLesson.id}/cancel`, {
+            onSuccess: () => {
+                setShowCancelModal(false);
+                reset();
+            },
+        });
+    };
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
@@ -175,8 +175,22 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                     </div>
                 </div>
             )}
+            {/* Mobiele Header - Alleen zichtbaar op kleine schermen */}
+            <div className="md:hidden bg-[#1a1a1a] text-white p-4 flex justify-between items-center">
+                <span className="font-bold">
+                    Easy Drive <span className="text-orange-500">4 </span>All
+                </span>
+                <button
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    className="p-2 outline-none"
+                >
+                    {isMenuOpen ? "✕" : "☰"}
+                </button>
+            </div>
             {/* Sidebar */}
-            <aside className="md:block w-full md:w-64 bg-[#1a1a1a] text-white flex flex-col transition-all duration-300">
+            <aside
+                className={`${isMenuOpen ? "block" : "hidden"} md:block w-full md:w-64 bg-[#1a1a1a] text-white flex flex-col transition-all duration-300`}
+            >
                 <div className="hidden md:block p-6 text-2xl font-bold border-b border-gray-800">
                     Easy Drive <span className="text-orange-500">4 </span>All
                 </div>
@@ -196,6 +210,12 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                     >
                         <span className="mr-3">📅</span> Kalender
                     </a>
+                    <button
+                        className="text-gray-400 text-sm hover:text-red-500 transition"
+                        onClick={logout}
+                    >
+                        Uitloggen
+                    </button>
                 </nav>
             </aside>
 

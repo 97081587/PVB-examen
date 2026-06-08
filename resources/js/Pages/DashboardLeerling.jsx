@@ -82,7 +82,9 @@ export default function Dashboard({ auth, rijlessen, stats }) {
 
             {/* Mobiele Header - Alleen zichtbaar op kleine schermen */}
             <div className="md:hidden bg-[#1a1a1a] text-white p-4 flex justify-between items-center">
-                <span className="font-bold">Easy Drive 4 All</span>
+                <span className="font-bold">
+                    Easy Drive <span className="text-orange-500">4 </span> All
+                </span>
                 <button
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                     className="p-2 outline-none"
@@ -114,6 +116,12 @@ export default function Dashboard({ auth, rijlessen, stats }) {
                     >
                         <span className="mr-3">📅</span> Kalender
                     </a>
+                    <button
+                        className="text-gray-400 text-sm hover:text-red-500 transition"
+                        onClick={logout}
+                    >
+                        Uitloggen
+                    </button>
                 </nav>
             </aside>
 
@@ -147,9 +155,7 @@ export default function Dashboard({ auth, rijlessen, stats }) {
                 {/* Welkomstbalk - Tekst wordt kleiner op mobiel */}
                 <div className="bg-[#10b981] text-white p-3 px-4 md:px-6 flex items-start md:items-center gap-2 text-sm md:text-base">
                     <span>📅</span>
-                    <span>
-                        Welkom terug, {auth?.user?.first_name}
-                    </span>
+                    <span>Welkom terug, {auth?.user?.first_name}</span>
                 </div>
 
                 <div className="p-4 md:p-8 space-y-6 md:space-y-8">
@@ -272,9 +278,7 @@ function TableRow({ id, date, time, address, instructor }) {
                 <button
                     type="button"
                     onClick={() =>
-                        router.visit(
-                            `/dashboard/kalender?selectedLesson=${id}`,
-                        )
+                        router.visit(`/dashboard/kalender?selectedLesson=${id}`)
                     }
                     className="text-gray-300 text-xs italic border px-2 py-1 rounded hover:bg-orange-500 transition"
                 >
