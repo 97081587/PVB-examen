@@ -78,10 +78,12 @@ class kalenderController extends Controller
     public function updateStatus (Request $request, Rijles $rijles) {
         $request->validate([
             'status' => 'required|in:gepland,afgerond,geannuleerd',
+            'reden' => 'required_if:status,geannuleerd|string|nullable|max:500',
         ]);
 
         $rijles->update([
-            'status' => $request->status
+            'status' => $request->status,
+            'reden' => $request->reden,
         ]);
 
         return back()->with('message', 'Status bijgewerkt');
