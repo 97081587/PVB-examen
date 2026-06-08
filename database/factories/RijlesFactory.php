@@ -29,7 +29,8 @@ class RijlesFactory extends Factory
                 ->first();
 
             $date = $this->faker->dateTimeBetween('2026-06-01', '2026-06-30');
-            $startTime = $this->faker->time('H:i');
+            // $startTime = $this->faker->time('H:i');
+            $startTime = fake()->numberBetween(8, 17) . ':00';
 
             $lessonDateTime = Carbon::parse(
                 $date->format('Y-m-d') . ' ' . $startTime
@@ -49,7 +50,7 @@ class RijlesFactory extends Factory
                 'date' => $date->format('Y-m-d'),
                 'start_time' => $startTime,
                 'end_time' => $this->faker->time('H:i'),
-                'location' => $this->faker->address(),
+                'location' => fake('nl_NL')->address(),
                 'lesson_goal' => $this->faker->sentence(),
                 'exam_info' => $this->faker->sentence(),
                 'lesson_funds' => $this->faker->sentence(),
