@@ -15,10 +15,11 @@ export default function CalendarDashboard({ auth, rijlessen }) {
         selectedLesson.location || "",
     );
 
-    const { data, setData, patch, post, processing, reset } = useForm({
+    const { data, setData, patch, processing, reset } = useForm({
         lessonobjective: selectedLesson?.lesson_goal || "",
         note: selectedLesson?.note || "",
-        reason: "",
+        status: '',
+        cancel_reason: '',
     });
 
     const handleSelectLesson = (lesson) => {
@@ -98,15 +99,19 @@ export default function CalendarDashboard({ auth, rijlessen }) {
         setShowCancelModal(true);
     };
 
+
     const handleCancelSubmit = (e) => {
-        e.preventDefault();
-        post(`/rijlessen/${selectedLesson.id}/annuleren`, {
-            onSuccess: () => {
-                setShowCancelModal(false);
-                reset();
-            },
-        });
-    };
+    e.preventDefault();
+
+    setData('status', 'geannuleerd');
+
+    patch(`/dashboard/kalender/${selectedLesson.id}/cancel`, {
+        onSuccess: () => {
+            setShowCancelModal(false);
+            reset();
+        },
+    });
+};
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
@@ -361,10 +366,10 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                                                     className="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-orange-500 focus:border-orange-500"
                                                     rows="3"
                                                     placeholder="Typ hier je reden..."
-                                                    value={data.reason}
+                                                    value={data.cancel_reason}
                                                     onChange={(e) =>
                                                         setData(
-                                                            "reason",
+                                                            "cancel_reason",
                                                             e.target.value,
                                                         )
                                                     }

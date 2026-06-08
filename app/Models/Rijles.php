@@ -21,7 +21,7 @@ class Rijles extends Model
         'location',
         'lesson_goal',
         'exam_info',
-        'lesson_funds',
+        'cancel_reason',
         'instructor_name',
         'status',
         'note',

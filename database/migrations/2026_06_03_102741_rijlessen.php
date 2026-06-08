@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('location'); // Ophaaladres
             $table->string('lesson_goal'); // Doel van de les, bijvoorbeeld "bochten", "parkeren", etc.
             $table->string('exam_info')->nullable(); // Optioneel, voor informatie over het examen als deze les daarvoor bedoeld is
-            $table->string('lesson_funds')->nullable(); // Optioneel, voor informatie over lesgeld of tegoed
+            $table->string('cancel_reason')->nullable(); // Optioneel, voor de reden van annulering
             $table->string('instructor_name');
             $table->enum('status', ['gepland', 'afgerond', 'geannuleerd'])->default('gepland'); // Status van de les
             $table->text('note')->nullable(); // Voo opmerkingen
