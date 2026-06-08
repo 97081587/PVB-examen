@@ -148,8 +148,7 @@ export default function Dashboard({ auth, rijlessen, stats }) {
                 <div className="bg-[#10b981] text-white p-3 px-4 md:px-6 flex items-start md:items-center gap-2 text-sm md:text-base">
                     <span>📅</span>
                     <span>
-                        Welkom terug, {auth?.user?.first_name} — je volgende les
-                        is <strong>{auth?.user?.nextLesson}</strong>
+                        Welkom terug, {auth?.user?.first_name}
                     </span>
                 </div>
 

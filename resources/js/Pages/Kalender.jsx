@@ -10,13 +10,15 @@ export default function CalendarDashboard({ auth, rijlessen }) {
     const lessons = rijlessen || [];
     const [selectedLesson, setSelectedLesson] = useState(lessons[0] || {});
     const [isEditingLocation, setIsEditingLocation] = useState(false);
+    const [showCancelModal, setShowCancelModal] = useState(false);
     const [tempLocation, setTempLocation] = useState(
         selectedLesson.location || "",
     );
 
-    const { data, setData, patch, processing } = useForm({
+    const { data, setData, patch, post, processing, reset } = useForm({
         lessonobjective: selectedLesson?.lesson_goal || "",
         note: selectedLesson?.note || "",
+        reason: "",
     });
 
     const handleSelectLesson = (lesson) => {
@@ -40,30 +42,30 @@ export default function CalendarDashboard({ auth, rijlessen }) {
         );
     };
 
-    const cancelLesson = () => {
-        if (
-            confirm(
-                `Weet je zeker dat je de les op ${selectedLesson.date} wilt annuleren?`,
-            )
-        ) {
-            router.patch(
-                `/dashboard/kalender/${selectedLesson.id}/update-status`,
-                {
-                    status: "geannuleerd",
-                },
-                {
-                    onSuccess: () => {
-                        alert(`Les op ${selectedLesson.date} geannuleerd.`);
-                    },
-                    onError: () => {
-                        alert(
-                            `Er is een fout opgetreden bij het annuleren van de les op ${selectedLesson.date}. Probeer het opnieuw.`,
-                        );
-                    },
-                },
-            );
-        }
-    };
+    // const cancelLesson = () => {
+    //     if (
+    //         confirm(
+    //             `Weet je zeker dat je de les op ${selectedLesson.date} wilt annuleren?`,
+    //         )
+    //     ) {
+    //         router.patch(
+    //             `/dashboard/kalender/${selectedLesson.id}/update-status`,
+    //             {
+    //                 status: "geannuleerd",
+    //             },
+    //             {
+    //                 onSuccess: () => {
+    //                     alert(`Les op ${selectedLesson.date} geannuleerd.`);
+    //                 },
+    //                 onError: () => {
+    //                     alert(
+    //                         `Er is een fout opgetreden bij het annuleren van de les op ${selectedLesson.date}. Probeer het opnieuw.`,
+    //                     );
+    //                 },
+    //             },
+    //         );
+    //     }
+    // };
 
     const updateLocation = () => {
         router.patch(
@@ -91,6 +93,20 @@ export default function CalendarDashboard({ auth, rijlessen }) {
     const currentYear = today.getFullYear();
 
     const todayString = `${currentYear}-${String(currentMonth).padStart(2, "0")}-${String(currentDay).padStart(2, "0")}`;
+
+    const handleOpenModal = () => {
+        setShowCancelModal(true);
+    };
+
+    const handleCancelSubmit = (e) => {
+        e.preventDefault();
+        post(`/rijlessen/${selectedLesson.id}/annuleren`, {
+            onSuccess: () => {
+                setShowCancelModal(false);
+                reset();
+            },
+        });
+    };
 
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col md:flex-row">
@@ -319,11 +335,67 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                                 {selectedLesson.status?.toLowerCase() ===
                                     "gepland" && (
                                     <button
-                                        onClick={cancelLesson}
+                                        onClick={handleOpenModal}
                                         className="text-red-500 text-xs font-bold uppercase hover:underline"
                                     >
                                         Annuleer les
                                     </button>
+                                )}
+                                {/* Cancel Modal */}
+                                {showCancelModal && (
+                                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30 p-4">
+                                        <div className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+                                            <h3 className="text-xl font-bold mb-4">
+                                                Les annuleren
+                                            </h3>
+                                            <p className="text-gray-600 mb-4 text-sm">
+                                                Wat is de reden dat je de les op{" "}
+                                                <strong>
+                                                    {selectedLesson.datum}
+                                                </strong>{" "}
+                                                wilt annuleren?
+                                            </p>
+
+                                            <form onSubmit={handleCancelSubmit}>
+                                                <textarea
+                                                    className="w-full border border-gray-300 rounded-xl p-3 text-sm focus:ring-orange-500 focus:border-orange-500"
+                                                    rows="3"
+                                                    placeholder="Typ hier je reden..."
+                                                    value={data.reason}
+                                                    onChange={(e) =>
+                                                        setData(
+                                                            "reason",
+                                                            e.target.value,
+                                                        )
+                                                    }
+                                                    required
+                                                ></textarea>
+
+                                                <div className="flex justify-end gap-3 mt-6">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() =>
+                                                            setShowCancelModal(
+                                                                false,
+                                                            )
+                                                        }
+                                                        className="px-4 py-2 text-gray-500 font-medium hover:text-gray-700"
+                                                    >
+                                                        Terug
+                                                    </button>
+                                                    <button
+                                                        type="submit"
+                                                        disabled={processing}
+                                                        className="bg-red-500 text-white px-6 py-2 rounded-xl font-bold hover:bg-red-600 transition disabled:opacity-50"
+                                                    >
+                                                        {processing
+                                                            ? "Bezig..."
+                                                            : "Bevestig annulering"}
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                 )}
                             </div>
 
