@@ -16,6 +16,7 @@ export default function CalendarDashboard({ auth, rijlessen }) {
     );
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+    // useForm van Inertia beheert de formulierdata, verwerking en reset
     const { data, setData, patch, processing, reset } = useForm({
         lessonobjective: selectedLesson?.lesson_goal || "",
         note: selectedLesson?.note || "",
@@ -23,6 +24,8 @@ export default function CalendarDashboard({ auth, rijlessen }) {
         cancel_reason: "",
     });
 
+    // Wordt aangeroepen als de gebruiker een les selecteert (via kalender of tabel).
+    // Synchroniseert alle relevante states met de nieuwe les.
     const handleSelectLesson = (lesson) => {
         setSelectedLesson(lesson);
         setData("note", lesson.note || "");
@@ -30,6 +33,9 @@ export default function CalendarDashboard({ auth, rijlessen }) {
         setIsEditingLocation(false);
     };
 
+    // Slaat de opmerking op via een PATCH-request naar de server.
+    // De spread-operator (...selectedLesson) kopieert alle bestaande lesvelden
+    // en overschrijft alleen 'note' met de nieuwe waarde.
     const saveNote = (e) => {
         e.preventDefault();
         alert(
@@ -44,6 +50,9 @@ export default function CalendarDashboard({ auth, rijlessen }) {
         );
     };
 
+    // Stuurt het gewijzigde ophaaladres naar de server via een PATCH-request.
+    // Bij succes: sluit de bewerkingsmodus en update de lokale lesdata zonder pagina-refresh.
+    // 'preserveScroll' zorgt dat de pagina niet terug naar boven springt.
     const updateLocation = () => {
         router.patch(
             `/dashboard/kalender/${selectedLesson.id}/update-location`,
@@ -69,12 +78,15 @@ export default function CalendarDashboard({ auth, rijlessen }) {
     const currentMonth = today.getMonth() + 1;
     const currentYear = today.getFullYear();
 
+    // padStart(2, "0") zorgt voor een voorloopnul bij enkelvoudige dag/maand (bijv. "06" i.p.v. "6").
     const todayString = `${currentYear}-${String(currentMonth).padStart(2, "0")}-${String(currentDay).padStart(2, "0")}`;
 
     const handleOpenModal = () => {
         setShowCancelModal(true);
     };
 
+    // Verwerkt het annuleerformulier: zet de status op 'geannuleerd' en
+    // stuurt een PATCH-request. Bij succes wordt de modal gesloten en het formulier gereset.
     const handleCancelSubmit = (e) => {
         e.preventDefault();
 
@@ -162,7 +174,8 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                     {isMenuOpen ? "✕" : "☰"}
                 </button>
             </div>
-            {/* Sidebar */}
+            {/* Sidebar - op mobiel verborgen tenzij het menu open is, op desktop altijd zichtbaar.
+                De dynamische className schakelt tussen 'block' en 'hidden' op basis van isMenuOpen. */}
             <aside
                 className={`${isMenuOpen ? "block" : "hidden"} md:block w-full md:w-64 bg-[#1a1a1a] text-white flex flex-col transition-all duration-300`}
             >
@@ -185,13 +198,15 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                     >
                         <span className="mr-3">📅</span> Kalender
                     </a>
+                </nav>
+                <div className="p-6 border-t border-gray-800">
                     <button
-                        className="text-gray-400 text-sm hover:text-red-500 transition"
+                        className="flex items-center gap-2 text-gray-400 text-sm hover:text-red-500 transition outline-none"
                         onClick={logout}
                     >
                         Uitloggen
                     </button>
-                </nav>
+                </div>
             </aside>
 
             <main className="flex-1">
@@ -242,6 +257,12 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                                         </div>
                                     ),
                                 )}
+                                {/* Genereer 30 vakjes (één per dag in de maand).
+                                    Per dag wordt gekeken of er een les op die datum valt.
+                                    Op basis daarvan krijgt het vakje een andere kleur/stijl:
+                                    - Groen rand: er is een les gepland
+                                    - Oranje: dit is vandaag
+                                    - Ring: deze dag is momenteel geselecteerd */}
                                 {[...Array(30)].map((_, i) => {
                                     const day = i + 1;
                                     const dayToMatch = `${currentYear}-${String(currentMonth).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
@@ -332,6 +353,8 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                                         {selectedLesson.start_time}
                                     </p>
                                 </div>
+                                {/* Toon de annuleerknop alleen als de les nog 'gepland' is.
+                                    optional chaining (?.) voorkomt een crash als status undefined is. */}
                                 {selectedLesson.status?.toLowerCase() ===
                                     "gepland" && (
                                     <button
@@ -529,10 +552,17 @@ export default function CalendarDashboard({ auth, rijlessen }) {
                                 />
                                 <button
                                     type="submit"
-                                    disabled={processing}
-                                    className="w-full bg-emerald-500 text-white py-3 rounded-xl text-sm font-bold hover:bg-emerald-600 transition shadow-lg shadow-emerald-100 disabled:opacity-50"
+                                    disabled={processing || !data.note.trim()}
+                                    className={`w-full py-3 rounded-xl text-sm font-bold transition shadow-lg 
+            ${
+                !data.note.trim() || processing
+                    ? "bg-gray-700 text-gray-500 cursor-not-allowed shadow-none"
+                    : "bg-emerald-500 text-white hover:bg-emerald-600 shadow-emerald-100"
+            }`}
                                 >
-                                    Opmerking opslaan
+                                    {processing
+                                        ? "Bezig met opslaan..."
+                                        : "Opmerking opslaan"}
                                 </button>
                             </form>
                         </div>

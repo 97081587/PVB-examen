@@ -5,10 +5,18 @@ const logout = () => {
     router.post("/dashboard/logout");
 };
 
+// Het component ontvangt drie props van de server via Inertia:
+// - auth: de ingelogde gebruiker
+// - rijlessen: alle lessen van de leerling
+// - stats: samenvattingscijfers (geplande lessen, afgerond, examen)
 export default function Dashboard({ auth, rijlessen, stats }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
+    // Filter alleen de geplande lessen uit de volledige lessenlijst.
+    // We controleren op zowel "planned" (Engels) als "gepland" (Nederlands)
+    // omdat de database beide waarden kan bevatten.
+    // De || [] zorgt dat het altijd een array blijft als rijlessen undefined is
     const geplandeLessen =
         rijlessen?.filter(
             (les) =>
@@ -98,7 +106,7 @@ export default function Dashboard({ auth, rijlessen, stats }) {
                 className={`${isMenuOpen ? "block" : "hidden"} md:block w-full md:w-64 bg-[#1a1a1a] text-white flex flex-col transition-all duration-300`}
             >
                 <div className="hidden md:block p-6 text-2xl font-bold border-b border-gray-800">
-                    Easy Drive 4 All
+                    Easy Drive <span className="text-orange-500">4 </span>All
                 </div>
                 <nav className="flex-1 p-4 space-y-2">
                     <div className="text-gray-500 text-xs font-bold uppercase mb-4 px-3">
@@ -116,13 +124,15 @@ export default function Dashboard({ auth, rijlessen, stats }) {
                     >
                         <span className="mr-3">📅</span> Kalender
                     </a>
+                </nav>
+                <div className="p-6 border-t border-gray-800">
                     <button
-                        className="text-gray-400 text-sm hover:text-red-500 transition"
+                        className="flex items-center gap-2 text-gray-400 text-sm hover:text-red-500 transition outline-none"
                         onClick={logout}
                     >
                         Uitloggen
                     </button>
-                </nav>
+                </div>
             </aside>
 
             {/* Main Content */}
@@ -163,7 +173,9 @@ export default function Dashboard({ auth, rijlessen, stats }) {
                         Mijn lessen
                     </h2>
 
-                    {/* Stats Grid - 1 kolom op mobiel, 3 op desktop */}
+                    {/* Stats Grid - toont 3 statistieken naast elkaar.
+                        De || "0" zorgt voor een fallback als de waarde nog niet beschikbaar is.
+                        stats?.examen_datum gebruikt optional chaining zodat er geen fout ontstaat als stats leeg is. */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                         <StatCard
                             icon="📋"
@@ -210,6 +222,8 @@ export default function Dashboard({ auth, rijlessen, stats }) {
                                 </thead>
 
                                 <tbody className="divide-y divide-gray-100">
+                                    {/* Conditional rendering: als er geplande lessen zijn, render een rij per les.
+                                        Anders toon één rij met een melding over lege staat */}
                                     {geplandeLessen.length > 0 ? (
                                         geplandeLessen.map((les) => (
                                             <TableRow
@@ -241,8 +255,10 @@ export default function Dashboard({ auth, rijlessen, stats }) {
         </div>
     );
 }
-
-// Sub-componenten blijven hetzelfde, maar met flexibelere padding
+// ─────────────────────────────────────────────
+// StatCard: herbruikbaar kaartje voor één statistiek.
+// Ontvangt icon, title en value als props van het Dashboard.
+// ─────────────────────────────────────────────
 function StatCard({ icon, title, value }) {
     return (
         <div className="bg-white p-6 md:p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
@@ -259,6 +275,11 @@ function StatCard({ icon, title, value }) {
     );
 }
 
+// ─────────────────────────────────────────────
+// TableRow: één rij in de lessen-tabel.
+// De "Bekijken"-knop navigeert naar de kalender en geeft via een query parameter (?selectedLesson=id)
+// door welke les direct geselecteerd moet worden op de kalenderpagina.
+// ─────────────────────────────────────────────
 function TableRow({ id, date, time, address, instructor }) {
     return (
         <tr className="hover:bg-gray-50 transition">
